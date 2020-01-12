@@ -1,0 +1,54 @@
+/* 选中文字 */
+::selection {
+  color: #fff;
+  background: #d9534f;
+}
+
+/* 容器 */
+.mybody3 {
+  background-color: rgba(230, 238, 232, 0.5);
+  box-shadow: black 0px 0px 8px;
+}
+
+.mybody3:hover {
+  box-shadow: black 0px 0px 50px;
+}
+
+
+/* 背景 */
+.bg1 {
+  background-color: rgba(10, 10, 0, 0.7);
+  color: #ffffff;
+}
+
+/* 小标签样式 */
+.smallLabel {
+  font-size: 8px;
+  font-weight: bold;
+  padding: 2px 4px;
+  margin: 4px;
+  border-radius: 2px;
+}
+
+/* 小标题 */
+.smallTltle {
+  padding: 10px 15px;
+  font-size: 14px;
+  border-radius: 4px 4px 0 0;
+}
+
+/* 热度  */
+.badge {
+  display: inline-block;
+  min-width: 10px;
+  padding: 2px 5px;
+  font-size: 12px;
+  font-weight: bold;
+  line-height: 1;
+  color: #ffffff;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: baseline;
+  background-color: rgb(217, 83, 79);
+  border-radius: 10px;
+}

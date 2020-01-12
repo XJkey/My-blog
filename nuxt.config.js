@@ -23,6 +23,7 @@ module.exports = {
   ** Global CSS
   */
   css: [
+    '~/assets/css/public.css'
   ],
   /*
   ** Plugins to load before mounting the App
@@ -39,7 +40,7 @@ module.exports = {
     '@nuxtjs/tailwindcss'
   ],
   tailwindcss: {
-    configPath: '~/config/tailwind.config.js',
+    configPath: '~/tailwind.config.js',
     cssPath: '~/assets/css/tailwind.css',
     purgeCSSInDev: false
   },
