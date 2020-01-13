@@ -17,10 +17,16 @@
 <script>
 import hearderNav from "../components/nav/hearderNav";
 import xFooter from "../components/footer";
+import AOS from 'aos';
+import 'aos/dist/aos.css';
+
 export default {
   components: {
     hearderNav,
     xFooter
+  },
+  mounted(){
+    AOS.init();
   }
 };
 </script>

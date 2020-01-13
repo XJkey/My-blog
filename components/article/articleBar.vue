@@ -6,9 +6,7 @@
     </div>
     <div class="articleTitle text-center">
       <div>
-        <a>
-          <a href="#" class="animated_h1">详细更新日志详细更新日志详细更新日志详细更新日志详细更新日志详细更新日志详细更新日志</a>
-        </a>
+        <a href="#" class="animated_h1">详细更新日志详细更新日志详细更新日志详细更新日志详细更新日志详细更新日志详细更新日志</a>
       </div>
     </div>
     <div class="articleTag text-center">

@@ -8,16 +8,26 @@
  -->
 <template>
   <div class="updateRecord">
-    <div class="bg1 smallTltle">更新记录</div>
-    <div class="mybody3 content">
-      <ul class="">
-        <li>20191123 向日葵：天空鹅卵石 更新汉化补丁v1.5</li>
-        <li>20191123 向日葵：天空鹅卵石 更新汉化补丁v1.5</li>
-      </ul>
-    </div>
-
+    <container-one :title="'更新记录'">
+      <div class="content">
+        <ul class="">
+          <li>20191123 向日葵：天空鹅卵石 更新汉化补丁v1.5</li>
+          <li>20191123 向日葵：天空鹅卵石 更新汉化补丁v1.5</li>
+        </ul>
+      </div>
+    </container-one>
   </div>
 </template>
+
+<script>
+  import containerOne from '../public/containerOne.vue'
+  export default {
+    components: {
+      containerOne
+    }
+  }
+</script>
+
 
 <style lang="scss">
   .updateRecord {

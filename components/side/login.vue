@@ -8,26 +8,36 @@
  -->
 <template>
   <div class="login">
-    <div class="bg1 smallTltle">请登陆</div>
-    <form action="" class="mybody3">
-      <div class="account flex">
-        <span class="flex-grow-0">qw</span>
-        <input type="text" class="outline-none flex-grow">
-      </div>
-      <div class="password flex">
-        <span class="flex-grow-0">qw</span>
-        <input type="text" class="outline-none flex-grow">
-      </div>
-      <label for="" class="remark">
-        <input type="checkbox" />记住我的登陆信息
-      </label>
-      <div class="btns">
-        <button type="submit" class="bg1">登陆</button>
-        <a class="bg1 float-right" href="#">注册</a>
-      </div>
-    </form>
+    <container-one :title="'请登陆'">
+      <form action="">
+        <div class="account flex">
+          <span class="flex-grow-0">qw</span>
+          <input type="text" class="outline-none flex-grow">
+        </div>
+        <div class="password flex">
+          <span class="flex-grow-0">qw</span>
+          <input type="text" class="outline-none flex-grow">
+        </div>
+        <label for="" class="remark">
+          <input type="checkbox" />记住我的登陆信息
+        </label>
+        <div class="btns">
+          <button type="submit" class="bg1">登陆</button>
+          <a class="bg1 float-right" href="#">注册</a>
+        </div>
+      </form>
+    </container-one>
   </div>
 </template>
+
+<script>
+  import containerOne from '../public/containerOne.vue'
+  export default {
+    components: {
+      containerOne
+    }
+  }
+</script>
 
 <style lang="scss">
   .login {
