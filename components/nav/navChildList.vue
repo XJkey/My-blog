@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2020-01-11 21:22:16
- * @LastEditTime : 2020-01-12 23:30:19
+ * @LastEditTime : 2020-01-14 00:19:58
  * @LastEditors  : Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /My-blog/components/nav/navChildList.vue
@@ -40,7 +40,7 @@
   .navChild {
     position: absolute;
     top: 100%;
-    z-index: 100;
+    z-index: 9999;
     color: #000;
     background-color: rgba(255, 255, 255, 0.8);
     padding: 3px 0;

@@ -1,3 +1,11 @@
+/*
+ * @Author: your name
+ * @Date: 2020-01-13 22:07:37
+ * @LastEditTime: 2020-01-13 23:55:16
+ * @LastEditors: your name
+ * @Description: In User Settings Edit
+ * @FilePath: /My-blog/nuxt.config.js
+ */
 
 module.exports = {
   mode: 'universal',
@@ -30,6 +38,7 @@ module.exports = {
   ** Plugins to load before mounting the App
   */
   plugins: [
+    { src: '@/plugins/vue-mavon-editor', srr: false }
   ],
   /*
   ** Nuxt.js dev-modules

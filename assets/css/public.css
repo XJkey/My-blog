@@ -52,3 +52,9 @@
   background-color: rgb(217, 83, 79);
   border-radius: 10px;
 }
+
+/* 富文本编辑器 */
+.mavonEditor {
+  width: 100%;
+  height: 100%;
+}
