@@ -9,6 +9,11 @@
 <template>
   <div class="articleDetails mybody3">
     <breadCrumb></breadCrumb>
+    <h1 class="title">秋天的谎言 -The only neat thing to do-</h1>
+    <div class="articleTag text-center">
+      <span class="smallLabel bg1">javascript,webstrom</span>
+      <span class="smallLabel bg1"> 37,548 ℃</span>
+    </div>
     <no-ssr>
       <mavon-editor :previewBackground="'#dff0d8'" @save='$save' :toolbarsFlag=false :defaultOpen="'preview'" :subfield=false
         :editable=false v-model="handbook" />
@@ -39,10 +44,17 @@
 
 <style lang="scss">
   .articleDetails {
-    width: 750px;
     padding: 20px;
     z-index: 0;
-
+    .title{
+      color: #3d4450;
+      text-align:center;
+      font-weight: 400;
+      font-size:32px;
+    }
+    .articleTag{
+      margin: 10px 0;
+    }
     .markdown-body {
       color: #468847;
     }
