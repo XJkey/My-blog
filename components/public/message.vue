@@ -1,3 +1,11 @@
+<!--
+ * @Author: your name
+ * @Date: 2020-01-14 22:46:28
+ * @LastEditTime : 2020-01-15 00:54:01
+ * @LastEditors  : Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: /My-blog/components/public/message.vue
+ -->
 <template>
     <div class='message-box'>
         <h3 class="comments-title"><i class="fa fa-pencil"></i>欢迎留言</h3>
@@ -11,7 +19,9 @@
 </template>
 
 <script>
+export default {
 
+}
 </script>
 
 <style lang="scss">
