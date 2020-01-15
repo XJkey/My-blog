@@ -31,7 +31,7 @@ module.exports = {
   ** Global CSS
   */
   css: [
-    '~/assets/css/public.css',
+    '~/assets/css/public.scss',
     '~/assets/css/font-awesome/css/font-awesome.min.css',
   ],
   /*
@@ -74,7 +74,11 @@ module.exports = {
     /*
     ** You can extend webpack config here
     */
-    extend (config, ctx) {
+    styleResources: {
+      scss: './assets/css/scssVariable.scss'
+    },
+    extend(config, ctx) {
+
     }
   }
 }
