@@ -1,14 +1,14 @@
 /* 选中文字 */
 ::selection {
-  color     : #fff;
+  color: #fff;
   background: #d9534f;
 }
 
 /* 容器 */
 .mybody3 {
   background-color: rgba(230, 238, 232, 0.5);
-  box-shadow      : black 0px 0px 8px;
-  border-radius   : 4px;
+  box-shadow: black 0px 0px 8px;
+  border-radius: 4px;
 }
 
 .mybody3:hover {
@@ -19,69 +19,69 @@
 /* 背景 */
 .bg1 {
   background-color: rgba(10, 10, 0, 0.7);
-  color           : #ffffff;
+  color: #ffffff;
 }
 
 /* 小标签样式 */
 .smallLabel {
-  font-size    : 8px;
-  font-weight  : bold;
-  padding      : 2px 4px;
-  margin       : 4px;
+  font-size: 8px;
+  font-weight: bold;
+  padding: 2px 4px;
+  margin: 4px;
   border-radius: 2px;
 }
 
 /* 小标题 */
 .smallTltle {
-  padding      : 10px 15px;
-  font-size    : 14px;
+  padding: 10px 15px;
+  font-size: 14px;
   border-radius: 4px 4px 0 0;
 }
 
 /* 热度  */
 .badge {
-  display         : inline-block;
-  min-width       : 10px;
-  padding         : 2px 5px;
-  font-size       : 12px;
-  font-weight     : bold;
-  line-height     : 1;
-  color           : #ffffff;
-  text-align      : center;
-  white-space     : nowrap;
-  vertical-align  : baseline;
+  display: inline-block;
+  min-width: 10px;
+  padding: 2px 5px;
+  font-size: 12px;
+  font-weight: bold;
+  line-height: 1;
+  color: #ffffff;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: baseline;
   background-color: rgb(217, 83, 79);
-  border-radius   : 10px;
+  border-radius: 10px;
 }
 
 /* 富文本编辑器 */
 .mavonEditor {
-  width : 100%;
+  width: 100%;
   height: 100%;
 }
 
 /* 评论、留言标题 */
 .comments-title {
-  color           : rgb(58, 135, 173);
+  color: rgb(58, 135, 173);
   background-color: rgba(217, 237, 247, 0.8);
-  margin-bottom   : 20px;
-  padding         : 15px;
-  border-width    : 1px;
-  border-style    : solid;
-  border-color    : transparent;
-  border-image    : initial;
-  border-radius   : 4px;
-  overflow        : auto;
-  font-size       : 14px;
-  text-align      : center;
+  margin-bottom: 20px;
+  padding: 15px;
+  border-width: 1px;
+  border-style: solid;
+  border-color: transparent;
+  border-image: initial;
+  border-radius: 4px;
+  overflow: auto;
+  font-size: 14px;
+  text-align: center;
 }
 
 /* 按钮 */
 button {
-  display      : inline-block;
-  text-align   : center;
-  font-size    : 12px;
-  padding      : 10px;
+  display: inline-block;
+  text-align: center;
+  font-size: 12px;
+  padding: 10px;
   border-radius: 4px;
   transition: all 0.5s;
 }
@@ -89,4 +89,21 @@ button {
 button:hover {
   background-color: #d9534f;
   transition: all 0.5s;
+}
+
+//输入框
+input {
+  width: 100%;
+  background: rgba(0, 0, 0, 0);
+  border: 1px solid rgb(221, 221, 221);
+  border-radius: 4px;
+  color: #000;
+  font-size: 14px;
+  padding: 4px 0 4px 10px;
+
+  &:focus {
+    background: #fff;
+    border: 1px solid #f89693;
+    box-shadow: black 0 0 50pxs;
+  }
 }
