@@ -38,7 +38,8 @@ module.exports = {
   ** Plugins to load before mounting the App
   */
   plugins: [
-    { src: '@/plugins/vue-mavon-editor', srr: false }
+    { src: '@/plugins/vue-mavon-editor', srr: false },
+    { src: '@/plugins/vee-validate' }
   ],
   /*
   ** Nuxt.js dev-modules
@@ -74,6 +75,10 @@ module.exports = {
     /*
     ** You can extend webpack config here
     */
+    transpile: [
+      "vee-validate/dist/rules",
+      "vee-validate/dist/locale/zh_CN"
+    ],
     styleResources: {
       scss: './assets/css/scssVariable.scss'
     },

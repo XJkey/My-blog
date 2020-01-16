@@ -16,54 +16,115 @@
       在这个站点注册
     </div>
     <div>
-      <form action="">
-        <div class="formItem">
-          <label for="">用户名</label>
-          <input class="outline-none" type="text" />
-          <div class="warning">
-            <span>还剩12s</span>
+      <ValidationObserver v-slot="{ handleSubmit }">
+        <form action="" @submit.prevent="handleSubmit(onSubmit)">
+
+          <div class="formItem">
+            <label for="">用户名</label>
+            <ValidationProvider rules="required|max:6" name='用户名' v-slot="{ errors }">
+              <input type="text" v-model="userName" class="outline-none">
+              <div class="warning">
+                <span>{{ errors[0] }}</span>
+              </div>
+            </ValidationProvider>
           </div>
-        </div>
-        <div class="formItem">
-          <label for="">电子邮箱</label>
-          <input class="outline-none" type="text" />
-          <div class="warning">
-            <span>还剩12s</span>
-            <a class="sendCode" href="javascript:">发送验证码</a>
+
+          <div class="formItem">
+            <label for="">电子邮箱</label>
+            <ValidationProvider rules="required|email" name='电子邮箱' v-slot="{ errors , validate}">
+              <input type="text" v-model="email" class="outline-none email">
+              <div class="warning">
+                <span>{{ errors[0] }}</span>
+                <span>12s</span>
+                <a class="sendCode" href="javascript:" @click="sendCode()">发送验证码</a>
+              </div>
+            </ValidationProvider>
           </div>
-        </div>
-        <div class="formItem">
-          <label for="">验证吗</label>
-          <input class="outline-none" type="text" />
-          <div class="warning">
-            <span>还剩12s</span>
+
+
+          <div class="formItem">
+            <label for="">验证码</label>
+            <ValidationProvider rules="required|length:4" name='验证码' v-slot="{ errors }">
+              <input type="text" v-model="verificationCode" class="outline-none">
+              <div class="warning">
+                <span>{{ errors[0] }}</span>
+              </div>
+            </ValidationProvider>
           </div>
-        </div>
-        <div class="formItem">
-          <label for="">密码</label>
-          <input class="outline-none" type="text" />
-          <div class="warning">
-            <span>还剩12s</span>
+
+
+          <div class="formItem">
+            <label for="">密码</label>
+            <ValidationProvider rules="required|alpha_dash|min:6" name='密码' v-slot="{ errors }">
+              <input type="text" v-model="password" class="outline-none">
+              <div class="warning">
+                <span>{{ errors[0] }}</span>
+              </div>
+            </ValidationProvider>
           </div>
-        </div>
-        <div class="formItem">
-          <label for="">确认密码</label>
-          <input class="outline-none" type="text" />
-          <div class="warning">
-            <span>还剩12s</span>
+
+          <div class="formItem">
+            <label for="">确认密码</label>
+            <ValidationProvider rules="required|vpassword" name='确认密码' v-slot="{ errors }">
+              <input type="text" v-model="vpassword" class="outline-none">
+              <div class="warning">
+                <span>{{ errors[0] }}</span>
+              </div>
+            </ValidationProvider>
           </div>
-        </div>
-        <div class="submit">
-          <button class="bg1">注册</button>
-        </div>
-      </form>
+
+          <div class="submit">
+            <button class="bg1">注册</button>
+          </div>
+
+        </form>
+      </ValidationObserver>
     </div>
   </div>
 </template>
 
 <script>
+  import { extend,validate } from 'vee-validate';
+
+
   export default {
-    layout: 'blank'
+    data() {
+      return {
+        userName: '',
+        email: '',
+        verificationCode: '',
+        password: '',
+        vpassword: ''
+
+      }
+    },
+    layout: 'blank',
+    mounted() {
+      extend('vpassword', {
+        validate: value => {
+          if (value == this.password) {
+            return true;
+          }
+
+          return '两次密码输入不一致';
+        }
+      });
+    },
+    methods: {
+      sendCode(s) {
+        var _self = this
+        var validateScope = 'email'
+        validate(validateScope).then((result) => {
+          if (result) {
+            //  提交数据
+            console.log(123)
+          }
+        })
+      },
+      onSubmit() {
+        alert('Form has been submitted!');
+      }
+    }
   }
 
 </script>
@@ -71,8 +132,9 @@
 <style lang="scss">
   .registered {
     width: 320px;
-    margin:30px auto;
+    margin: 30px auto;
     font-size: 13px;
+
     .title {
       background-color: #3d4450;
       text-align: center;
@@ -81,7 +143,7 @@
       font-size: 20px;
       font-family: "Microsoft YaHei";
       height: 50px;
-      border-radius:4px;
+      border-radius: 4px;
 
       em {
         color: #bfc5d4;
@@ -106,6 +168,7 @@
 
       .formItem {
         margin-bottom: 4px;
+
         label {
           color: #72777c;
           font-size: 14px;
@@ -118,23 +181,25 @@
         .warning {
           height: 14px;
           color: #72777c;
-          span{
+
+          span {
             color: $color1;
           }
-          .sendCode{
+
+          .sendCode {
             float: right;
           }
         }
-        
+
       }
     }
 
-    .submit{
+    .submit {
       margin-top: 25px;
-          button{
-            width: 100%;
-          }
-        }
-  }
 
+      button {
+        width: 100%;
+      }
+    }
+  }
 </style>

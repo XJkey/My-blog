@@ -21,7 +21,8 @@
     "node-sass": "^4.13.0",
     "nuxt": "^2.0.0",
     "sass": "^1.24.4",
-    "sass-loader": "^8.0.0"
+    "sass-loader": "^8.0.0",
+    "vee-validate": "^3.2.1"
   },
   "devDependencies": {
     "@nuxtjs/eslint-config": "^1.0.1",
