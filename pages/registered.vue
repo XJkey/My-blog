@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2020-01-15 20:33:18
- * @LastEditTime : 2020-01-15 23:34:18
+ * @LastEditTime : 2020-01-16 23:13:49
  * @LastEditors  : Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /My-blog/pages/registered.vue
@@ -31,12 +31,12 @@
 
           <div class="formItem">
             <label for="">电子邮箱</label>
-            <ValidationProvider rules="required|email" name='电子邮箱' v-slot="{ errors , validate}">
+            <ValidationProvider rules="required|email" name='电子邮箱' v-slot="{ errors,validate}">
               <input type="text" v-model="email" class="outline-none email">
               <div class="warning">
                 <span>{{ errors[0] }}</span>
-                <span>12s</span>
-                <a class="sendCode" href="javascript:" @click="sendCode()">发送验证码</a>
+                <span v-show="sendCodeTime!=0">{{sendCodeTime}}s后可以重发</span>
+                <a class="sendCode" href="javascript:" @click="sendCode(validate)">发送验证码</a>
               </div>
             </ValidationProvider>
           </div>
@@ -84,7 +84,10 @@
 </template>
 
 <script>
-  import { extend,validate } from 'vee-validate';
+  import {
+    extend,
+    validate
+  } from 'vee-validate';
 
 
   export default {
@@ -94,8 +97,9 @@
         email: '',
         verificationCode: '',
         password: '',
-        vpassword: ''
+        vpassword: '',
 
+        sendCodeTime: 0,
       }
     },
     layout: 'blank',
@@ -111,13 +115,21 @@
       });
     },
     methods: {
-      sendCode(s) {
-        var _self = this
-        var validateScope = 'email'
-        validate(validateScope).then((result) => {
-          if (result) {
-            //  提交数据
-            console.log(123)
+      sendCode(v) {
+        // 第一种验证方式
+        // validate(this.email,"required|email").then((result)=>{
+        //   console.log(result)
+        // })
+        // 第二种验证方式
+        v().then((result) => {
+          if (result.valid && this.sendCodeTime <= 0) {
+            this.sendCodeTime = 5
+            let timerid = setInterval(() => {
+              --this.sendCodeTime;
+              if (this.sendCodeTime <= 0) {
+                clearInterval(timerid);
+              }
+            }, 1000)
           }
         })
       },
@@ -202,4 +214,5 @@
       }
     }
   }
+
 </style>
