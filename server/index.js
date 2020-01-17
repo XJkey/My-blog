@@ -1,3 +1,11 @@
+/*
+ * @Author: your name
+ * @Date: 2020-01-17 21:18:43
+ * @LastEditTime : 2020-01-18 00:00:40
+ * @LastEditors  : Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: /My-blog/server/index.js
+ */
 //const Koa = require('koa');
 import Koa from 'koa';
 const consola = require('consola')
@@ -11,6 +19,7 @@ import Redis from 'koa-redis';
 
 
 import users from './interface/users';
+
 const app = new Koa()
 
 // Import and Set Nuxt.js options
@@ -32,11 +41,16 @@ async function start() {
     useNewUrlParser: true
   })
 
+
+  app.use(bodyParser({
+    extendTypes: ["json", 'form', 'text']
+  }));
+
   //当 app.proxy 设置为 true 时，支持 X-Forwarded-Host
   app.proxy = true;
 
   //设置session
-  app.keys = ['mt', 'keykey']
+  app.keys = ['blog', 'keykey']
   app.use(session({
     key: 'blog',
     prefix: 'blog:uid',
@@ -47,7 +61,7 @@ async function start() {
       host: dbConfig.redis.host, // Redis host
       family: 4, // 4 (IPv4) or 6 (IPv6)
       password: dbConfig.redis.password,
-      db: 0
+      db: 1
     }),
     cookie: {
       maxAge: 24 * 60 * 60 * 1000
@@ -55,6 +69,8 @@ async function start() {
     errorHandler(err, type, ctx) {
     }
   }))
+
+ 
 
   // Build in development
   if (config.dev) {
@@ -64,6 +80,8 @@ async function start() {
     await nuxt.ready()
   }
 
+  //路由在此处引用
+  app.use(users.routes());
 
   app.use((ctx) => {
     ctx.status = 200

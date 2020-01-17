@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2020-01-15 20:33:18
- * @LastEditTime : 2020-01-16 23:13:49
+ * @LastEditTime : 2020-01-18 00:57:42
  * @LastEditors  : Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /My-blog/pages/registered.vue
@@ -100,6 +100,7 @@
         vpassword: '',
 
         sendCodeTime: 0,
+        sendCodeBtnDisabled: true,
       }
     },
     layout: 'blank',
@@ -116,22 +117,45 @@
     },
     methods: {
       sendCode(v) {
+        let self = this;
         // 第一种验证方式
         // validate(this.email,"required|email").then((result)=>{
         //   console.log(result)
         // })
         // 第二种验证方式
+
         v().then((result) => {
-          if (result.valid && this.sendCodeTime <= 0) {
-            this.sendCodeTime = 5
-            let timerid = setInterval(() => {
-              --this.sendCodeTime;
-              if (this.sendCodeTime <= 0) {
-                clearInterval(timerid);
+          if (result.valid && (this.sendCodeTime <= 0 && this.sendCodeBtnDisabled)) {
+            this.sendCodeBtnDisabled = false;
+            this.$axios.post('/users/verify', {
+              username: encodeURIComponent(this.userName),
+              email: this.email
+            }).then(({
+              status,
+              data
+            }) => {
+              console.log(status, data);
+              if (data.code == 0) {
+                this.sendCodeTime = 60
+                let timerid = setInterval(() => {
+                  --this.sendCodeTime;
+                  if (this.sendCodeTime <= 0) {
+                    this.sendCodeBtnDisabled = true;
+                    clearInterval(timerid);
+                  }
+                }, 1000)
+
+              } else {
+                this.sendCodeBtnDisabled = true;
               }
-            }, 1000)
+            })
           }
         })
+
+
+
+
+
       },
       onSubmit() {
         alert('Form has been submitted!');
