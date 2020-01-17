@@ -23,7 +23,7 @@
         </label>
         <div class="btns">
           <button type="submit" class="bg1">登陆</button>
-          <a class="bg1 float-right" href="#">注册</a>
+          <a class="bg1 float-right" href="./registered">注册</a>
         </div>
       </form>
     </container-one>
