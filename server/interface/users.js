@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-01-17 21:23:19
- * @LastEditTime : 2020-01-18 00:26:35
+ * @LastEditTime : 2020-01-19 00:53:57
  * @LastEditors  : Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /My-blog/server/interface/users.js
@@ -12,6 +12,7 @@ import nodeMailer from 'nodemailer';
 import User from '../dbs/models/users';
 import Config from '../dbs/config';
 import axios from './utils/axios';
+import {Auth} from '../middleware/auth'
 
 let router = new Router({
   prefix: '/users'
@@ -26,7 +27,7 @@ let Store = new Redis({
 }).client
 
 //发送验证码
-router.post('/verify', async (ctx, next) => {
+router.post('/verify', new Auth().m, async (ctx, next) => {
   let username = ctx.request.body.username;
   let email = ctx.request.body.email;
   let user = await User.find({
