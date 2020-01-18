@@ -43,11 +43,12 @@ router.post('/verify', async (ctx, next) => {
   }
 
 
+  const createTime = await Store.hget(`nodemail:${username}`, 'createTime');
   const saveExpire = await Store.hget(`nodemail:${username}`, 'expire');
-  if (saveExpire && new Date().getTime() - (saveExpire - 59 * 60 * 1000) < 0) {
+  if (createTime && new Date().getTime() - createTime - Config.smtp.redispatch() < 0 && new Date().getTime() - createTime - saveExpire < 0) {
     ctx.body = {
       code: -1,
-      msg: '验证请求过于频繁，一分钟内一次'
+      msg: `验证请求过于频繁，${Config.smtp.redispatch() / 1000}秒内一次`
     }
     return false
   }
@@ -69,8 +70,10 @@ router.post('/verify', async (ctx, next) => {
   let ko = {
     code: Config.smtp.code(),
     expire: Config.smtp.expire(),
+    createTime: Config.smtp.createTime(),
+    redispatch: Config.smtp.redispatch(),
     email: ctx.request.body.email,
-    user: ctx.request.body.username
+    user: ctx.request.body.username,
   }
 
   let mailOption = {
@@ -86,9 +89,9 @@ router.post('/verify', async (ctx, next) => {
           resolve(false)
           return console.log(error)
         } else {
-          Store.hmset(`nodemail:${ko.user}`, 'code', ko.code, 'expire', ko.expire, 'email', ko.email);
+          Store.hmset(`nodemail:${ko.user}`, 'code', ko.code, 'expire', ko.expire, 'email', ko.email, 'createTime', ko.createTime);
           //设置数据有效期
-          Store.expire(`nodemail:${ko.user}`, 60 * 60 * 1000);
+          Store.expire(`nodemail:${ko.user}`, ko.expire);
           resolve(true)
         }
       })
@@ -98,7 +101,8 @@ router.post('/verify', async (ctx, next) => {
   if (isSendMail) {
     ctx.body = {
       code: 0,
-      msg: '验证码已发送，有效期一分钟'
+      msg: '验证码已发送',
+      redispatch: ko.redispatch
     }
   } else {
     ctx.body = {
@@ -120,8 +124,9 @@ router.post('/singup', async (ctx) => {
   if (code) {
     const saveCode = await Store.hget(`nodemail:${username}`, 'code');
     const saveExpire = await Store.hget(`nodemail:${username}`, 'expire');
+    const createTime = await Store.hget(`nodemail:${username}`, 'createTime');
     if (code === saveCode) {
-      if (new Date().getTime() - saveExpire > 0) {
+      if (new Date().getTime() - createTime - saveExpire > 0) {
         ctx.body = {
           code: -1,
           msg: '验证码已过期，请重新尝试'
@@ -158,6 +163,14 @@ router.post('/singup', async (ctx) => {
     password,
     email
   })
+
+  if (nuser) {
+    ctx.body = {
+      code: 0,
+      msg: '注册成功'
+    }
+    return true;
+  }
 })
 
 export default router

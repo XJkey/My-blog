@@ -45,7 +45,7 @@
           <div class="formItem">
             <label for="">验证码</label>
             <ValidationProvider rules="required|length:4" name='验证码' v-slot="{ errors }">
-              <input type="text" v-model="verificationCode" class="outline-none">
+              <input type="text" v-model="code" class="outline-none">
               <div class="warning">
                 <span>{{ errors[0] }}</span>
               </div>
@@ -56,7 +56,7 @@
           <div class="formItem">
             <label for="">密码</label>
             <ValidationProvider rules="required|alpha_dash|min:6" name='密码' v-slot="{ errors }">
-              <input type="text" v-model="password" class="outline-none">
+              <input type="password" v-model="password" class="outline-none">
               <div class="warning">
                 <span>{{ errors[0] }}</span>
               </div>
@@ -66,7 +66,7 @@
           <div class="formItem">
             <label for="">确认密码</label>
             <ValidationProvider rules="required|vpassword" name='确认密码' v-slot="{ errors }">
-              <input type="text" v-model="vpassword" class="outline-none">
+              <input type="password" v-model="vpassword" class="outline-none">
               <div class="warning">
                 <span>{{ errors[0] }}</span>
               </div>
@@ -95,7 +95,7 @@
       return {
         userName: '',
         email: '',
-        verificationCode: '',
+        code: '',
         password: '',
         vpassword: '',
 
@@ -110,7 +110,6 @@
           if (value == this.password) {
             return true;
           }
-
           return '两次密码输入不一致';
         }
       });
@@ -128,15 +127,15 @@
           if (result.valid && (this.sendCodeTime <= 0 && this.sendCodeBtnDisabled)) {
             this.sendCodeBtnDisabled = false;
             this.$axios.post('/users/verify', {
-              username: encodeURIComponent(this.userName),
+              //username: encodeURIComponent(this.userName),
+              username: this.userName,
               email: this.email
             }).then(({
               status,
               data
             }) => {
-              console.log(status, data);
               if (data.code == 0) {
-                this.sendCodeTime = 60
+                this.sendCodeTime = data.redispatch / 1000
                 let timerid = setInterval(() => {
                   --this.sendCodeTime;
                   if (this.sendCodeTime <= 0) {
@@ -158,7 +157,20 @@
 
       },
       onSubmit() {
-        alert('Form has been submitted!');
+        this.$axios.post('/users/singup', {
+          username: this.userName,
+          email: this.email,
+          username: this.userName,
+          password: this.password,
+          email: this.email,
+          code: this.code
+        }).then(({
+          status,
+          data
+        }) => {
+          console.log(status, data)
+        }
+        )
       }
     }
   }
@@ -238,5 +250,4 @@
       }
     }
   }
-
 </style>
