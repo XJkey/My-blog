@@ -16,15 +16,23 @@ import mongoose from 'mongoose';
 import bodyParser from 'koa-bodyparser';
 import session from 'koa-generic-session';
 import Redis from 'koa-redis';
+import passport from './interface/utils/passport';
 
+
+import errors from './core/http-exception';
+import catchError from './middleware/exception';
 
 import users from './interface/users';
 
-const app = new Koa()
+
+const app = new Koa();
 
 // Import and Set Nuxt.js options
 const config = require('../nuxt.config.js')
 config.dev = app.env !== 'production'
+
+global.errs = errors;
+global.dev=config.dev;
 
 async function start() {
   // Instantiate nuxt.js
@@ -40,7 +48,8 @@ async function start() {
     //如果要以url方式链接，需要加上这个参数
     useNewUrlParser: true
   })
-
+  
+  app.use(catchError);
 
   app.use(bodyParser({
     extendTypes: ["json", 'form', 'text']
@@ -79,9 +88,10 @@ async function start() {
   } else {
     await nuxt.ready()
   }
-
+  app.use(passport.initialize());
+  app.use(passport.session());
   //路由在此处引用
-  app.use(users.routes());
+  app.use(users.routes()).use(users.allowedMethods())
 
   app.use((ctx) => {
     ctx.status = 200

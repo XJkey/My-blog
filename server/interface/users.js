@@ -36,11 +36,12 @@ router.post('/verify', new Auth().m, async (ctx, next) => {
 
 
   if (user.length) {
-    ctx.body = {
-      code: -1,
-      msg: '邮箱已被注册'
-    }
-    return false;
+    // ctx.body = {
+    //   code: -1,
+    //   msg: '邮箱已被注册'
+    // }
+    console.log(new global.errs.HttpException() instanceof  global.errs.HttpException)
+    throw new global.errs.HttpException();
   }
 
 
@@ -101,7 +102,7 @@ router.post('/verify', new Auth().m, async (ctx, next) => {
 
   if (isSendMail) {
     ctx.body = {
-      code: 0,
+      code: 200,
       msg: '验证码已发送',
       redispatch: ko.redispatch
     }
@@ -167,7 +168,7 @@ router.post('/singup', async (ctx) => {
 
   if (nuser) {
     ctx.body = {
-      code: 0,
+      code: 200,
       msg: '注册成功'
     }
     return true;

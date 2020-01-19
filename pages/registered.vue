@@ -91,6 +91,7 @@
 
 
   export default {
+    middleware: 'nuxtAuth',
     data() {
       return {
         userName: '',
@@ -134,7 +135,7 @@
               status,
               data
             }) => {
-              if (data.code == 0) {
+              if (data.code == 200) {
                 this.sendCodeTime = data.redispatch / 1000
                 let timerid = setInterval(() => {
                   --this.sendCodeTime;
@@ -147,6 +148,8 @@
               } else {
                 this.sendCodeBtnDisabled = true;
               }
+            }).catch(err => {
+              this.sendCodeBtnDisabled = true;
             })
           }
         })
@@ -168,7 +171,9 @@
           status,
           data
         }) => {
-          console.log(status, data)
+          if (data && data.code == 200) {
+            window.location.href = '/'
+          }
         }
         )
       }

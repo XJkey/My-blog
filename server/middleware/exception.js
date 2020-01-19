@@ -6,16 +6,17 @@
  * @Description: In User Settings Edit
  * @FilePath: /My-blog/middleware/exception.js
  */
-const { HttpException } = require('../server/core/http-exception.js');
+import { HttpException } from '../core/http-exception.js';
 const catchError = async (ctx, next) => {
     try {
         await next();
     } catch (error) {
         const isHttpException = error instanceof HttpException;
-        const isDev = global.config.environment === 'dev';
-        if (isDev && !isHttpException) {
-            throw error;
-        }
+        const isDev = global.dev;
+        console.log(isHttpException,isDev)
+        // if (isDev && !isHttpException) {
+        //     throw error;
+        // }
         if (isHttpException) {
             ctx.body = {
                 msg: error.msg,

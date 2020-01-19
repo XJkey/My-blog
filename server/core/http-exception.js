@@ -33,6 +33,7 @@ class NotFound extends HttpException {
         this.msg = msg || "资源未找到";
     }
 }
+
 class AuthFailed extends HttpException {
     constructor(msg, errorCode) {
         super();
@@ -51,31 +52,26 @@ class Forbbiden extends HttpException {
     }
 }
 
-class LikeError extends HttpException {
-    constructor(msg, errorCode) {
-        super();
-        this.errorCode = errorCode || 60001;
-        this.code = 400;
-        this.msg = msg || "你已经点过赞了";
-    }
-}
+console.log(124340003)
 
-class DislikeError extends HttpException {
-    constructor(msg, errorCode) {
-        super();
-        this.errorCode = errorCode || 6002;
-        this.code = 400;
-        this.msg = msg || "你已取消点赞";
-    }
-}
+console.log(new Forbbiden() instanceof HttpException)
 
-module.exports = {
+
+
+export default {
     HttpException,
     ParameterException,
     Success,
     NotFound,
     AuthFailed,
-    Forbbiden,
-    LikeError,
-    DislikeError
+    Forbbiden
+}
+
+export {
+    HttpException,
+    ParameterException,
+    Success,
+    NotFound,
+    AuthFailed,
+    Forbbiden
 }
