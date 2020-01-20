@@ -52,9 +52,14 @@ class Forbbiden extends HttpException {
     }
 }
 
-console.log(124340003)
-
-console.log(new Forbbiden() instanceof HttpException)
+class ValidationError extends HttpException {
+    constructor(msg, errorCode) {
+        super();
+        this.errorCode = errorCode || 10005;
+        this.code = 405;
+        this.msg = msg || "验证失败";
+    }
+}
 
 
 
@@ -64,7 +69,8 @@ export default {
     Success,
     NotFound,
     AuthFailed,
-    Forbbiden
+    Forbbiden,
+    ValidationError
 }
 
 export {
@@ -73,5 +79,6 @@ export {
     Success,
     NotFound,
     AuthFailed,
-    Forbbiden
+    Forbbiden,
+    ValidationError
 }

@@ -17,7 +17,7 @@
     </div>
     <div>
       <ValidationObserver v-slot="{ handleSubmit }">
-        <form action="" @submit.prevent="handleSubmit(onSubmit)">
+        <form action="" @submit.prevent="handleSubmit()">
 
           <div class="formItem">
             <label for="">用户名</label>
@@ -74,7 +74,7 @@
           </div>
 
           <div class="submit">
-            <button class="bg1">注册</button>
+            <button class="bg1" @click='onSubmit'>注册</button>
           </div>
 
         </form>
@@ -165,6 +165,7 @@
           email: this.email,
           username: this.userName,
           password: this.password,
+          vpassword:this.vpassword,
           email: this.email,
           code: this.code
         }).then(({
