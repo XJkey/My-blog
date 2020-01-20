@@ -11,18 +11,18 @@
     <container-one :title="'请登陆'">
       <form action="">
         <div class="account flex">
-          <span class="flex-grow-0">qw</span>
-          <input type="text" class="outline-none flex-grow">
+          <span class="flex-grow-0"><i class="fa fa-user"></i></span>
+          <input type="text" name="userName" v-model="userName" class="outline-none flex-grow">
         </div>
         <div class="password flex">
-          <span class="flex-grow-0">qw</span>
-          <input type="text" class="outline-none flex-grow">
+          <span class="flex-grow-0"><i class="fa fa-lock"></i></span>
+          <input type="password"  name="password" v-model="password" class="outline-none flex-grow">
         </div>
         <label for="" class="remark">
           <input type="checkbox" />记住我的登陆信息
         </label>
         <div class="btns">
-          <button type="submit" class="bg1">登陆</button>
+          <button type="button" class="bg1" @click="onSubmit">登陆</button>
           <a class="bg1 float-right" href="./registered">注册</a>
         </div>
       </form>
@@ -33,8 +33,30 @@
 <script>
   import containerOne from '../public/containerOne.vue'
   export default {
+    data(){
+      return {
+        userName:'',
+        password:''
+      }
+    },
     components: {
       containerOne
+    },
+    methods:{
+      onSubmit() {
+        this.$axios.post('/users/signin', {
+          username: this.userName,
+          password: this.password,
+        }).then(({
+          status,
+          data
+        }) => {
+          // if (data && data.code == 200) {
+          //   window.location.href = '/'
+          // }
+        }
+        )
+      }
     }
   }
 </script>

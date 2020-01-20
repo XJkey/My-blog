@@ -17,6 +17,7 @@
     "axios": "^0.19.1",
     "bcryptjs": "^2.4.3",
     "cross-env": "^5.2.0",
+    "datalize": "^0.3.4",
     "koa": "^2.6.2",
     "koa-bodyparser": "^4.2.1",
     "koa-generic-session": "^2.0.4",

@@ -12,7 +12,10 @@ import nodeMailer from 'nodemailer';
 import User from '../dbs/models/users';
 import Config from '../dbs/config';
 import axios from './utils/axios';
-import {Auth} from '../middleware/auth'
+import { Auth } from '../middleware/auth';
+import Passport from './utils/passport'
+
+import { singupValidate } from '../core/validat';
 
 let router = new Router({
   prefix: '/users'
@@ -30,20 +33,8 @@ let Store = new Redis({
 router.post('/verify', new Auth().m, async (ctx, next) => {
   let username = ctx.request.body.username;
   let email = ctx.request.body.email;
-  let user = await User.find({
-    email
-  });
 
-
-  if (user.length) {
-    // ctx.body = {
-    //   code: -1,
-    //   msg: '邮箱已被注册'
-    // }
-    console.log(new global.errs.HttpException() instanceof  global.errs.HttpException)
-    throw new global.errs.HttpException();
-  }
-
+  await User.isRegistered({ email })
 
   const createTime = await Store.hget(`nodemail:${username}`, 'createTime');
   const saveExpire = await Store.hget(`nodemail:${username}`, 'expire');
@@ -116,63 +107,55 @@ router.post('/verify', new Auth().m, async (ctx, next) => {
 })
 
 
-router.post('/singup', async (ctx) => {
+//注册用户
+router.post('/singup', singupValidate, async (ctx) => {
   const {
     username,
     password,
     email,
     code
-  } = ctx.request.body;
+  } = ctx.form;
   if (code) {
     const saveCode = await Store.hget(`nodemail:${username}`, 'code');
     const saveExpire = await Store.hget(`nodemail:${username}`, 'expire');
     const createTime = await Store.hget(`nodemail:${username}`, 'createTime');
     if (code === saveCode) {
       if (new Date().getTime() - createTime - saveExpire > 0) {
-        ctx.body = {
-          code: -1,
-          msg: '验证码已过期，请重新尝试'
-        }
-        return false;
+        throw new global.errs.ValidationError('验证码已过期，请重新尝试');
       }
     } else {
-      ctx.body = {
-        code: -1,
-        msg: '请填写正确的验证吗'
-      }
-      return false;
+      throw new global.errs.ValidationError('请填写正确的验证吗');
     }
   } else {
-    ctx.body = {
-      code: -1,
-      msg: '请填写验证吗'
-    }
-    return false;
-  }
-  let user = await User.find({
-    username
-  });
-  if (user.length) {
-    ctx.body = {
-      code: -1,
-      msg: '已被注册'
-    }
-    return false;
+    throw new global.errs.ValidationError('请填写验证吗');
   }
 
-  let nuser = await User.create({
+  //验证是否注册
+  await User.isRegistered({ username });
+
+  await new User({
     username,
     password,
     email
-  })
+  }).createUser()
 
-  if (nuser) {
-    ctx.body = {
-      code: 200,
-      msg: '注册成功'
-    }
-    return true;
-  }
 })
+
+//登陆
+router.post('/signin', async (ctx, next) => {
+  return Passport.authenticate('local', function (err, user, info, atatus) {
+    if (err) {
+      throw err;
+    } else {
+      if (user) {
+        new global.errs.Success('登陆成功');
+        return ctx.login(user)
+      } else {
+        throw new global.errs.HttpException(info)
+      }
+    }
+  })(ctx, next)
+})
+
 
 export default router

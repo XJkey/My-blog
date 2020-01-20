@@ -28,16 +28,49 @@ const UserSchema = new Schema({
 })
 
 // 静态方法
-UserSchema.statics.findByUid = function (uid, cb) {
-  this.find({ "_id": uid }, function (err, docs) {
-    cb(err, docs);
-  })
+UserSchema.statics.isRegistered = async function ({ email, username }) {
+  if (email) {
+    let uers = await this.find({ email }, function (err, docs) {
+      if (err) {
+        throw err;
+      } else {
+        return docs
+      }
+    })
+
+    if (uers.length) {
+      throw new global.errs.HttpException('邮箱已被注册')
+    }
+  }
+  if (username) {
+    let uers = await this.find({ username }, function (err, docs) {
+      if (err) {
+        throw err;
+      } else {
+        return docs
+      }
+    })
+
+    if (uers.length) {
+      throw new global.errs.HttpException('用户名已被注册')
+    }
+  }
+
+
 }
 
 // 实例方法
-UserSchema.methods.print = function () {
-  console.log('这是一个实例方法');
-  console.log(this);
+UserSchema.methods.createUser = async function () {
+  let nuser = await this.model('User').create({
+    username: this.username,
+    password: this.password,
+    email: this.email
+  })
+  if (nuser) {
+    throw new global.errs.Success('注册成功')
+  } else {
+    throw new global.errs.ValidationError('注册失败')
+  }
 };
 
 export default mongoose.model('User', UserSchema)  
