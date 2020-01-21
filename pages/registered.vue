@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2020-01-15 20:33:18
- * @LastEditTime : 2020-01-18 00:57:42
+ * @LastEditTime : 2020-01-22 01:00:23
  * @LastEditors  : Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /My-blog/pages/registered.vue
@@ -17,12 +17,12 @@
     </div>
     <div>
       <ValidationObserver v-slot="{ handleSubmit }">
-        <form action="" @submit.prevent="handleSubmit()">
+        <form action="" @submit.prevent="handleSubmit(onSubmit)">
 
           <div class="formItem">
             <label for="">用户名</label>
             <ValidationProvider rules="required|max:6" name='用户名' v-slot="{ errors }">
-              <input type="text" v-model="userName" class="outline-none">
+              <input type="text" v-model="username" class="outline-none">
               <div class="warning">
                 <span>{{ errors[0] }}</span>
               </div>
@@ -74,7 +74,7 @@
           </div>
 
           <div class="submit">
-            <button class="bg1" @click='onSubmit'>注册</button>
+            <button class="bg1">注册</button>
           </div>
 
         </form>
@@ -94,7 +94,7 @@
     middleware: 'nuxtAuth',
     data() {
       return {
-        userName: '',
+        username: '',
         email: '',
         code: '',
         password: '',
@@ -128,8 +128,8 @@
           if (result.valid && (this.sendCodeTime <= 0 && this.sendCodeBtnDisabled)) {
             this.sendCodeBtnDisabled = false;
             this.$axios.post('/users/verify', {
-              //username: encodeURIComponent(this.userName),
-              username: this.userName,
+              //username: encodeURIComponent(this.username),
+              username: this.username,
               email: this.email
             }).then(({
               status,
@@ -149,23 +149,25 @@
                 this.sendCodeBtnDisabled = true;
               }
             }).catch(err => {
+              let data = err.response.data;
+              console.log(data.msg)
               this.sendCodeBtnDisabled = true;
+
+              if (data.msg) {
+                this.$layer.msg(data.msg);
+              }
             })
           }
         })
 
-
-
-
-
       },
       onSubmit() {
         this.$axios.post('/users/singup', {
-          username: this.userName,
+          username: this.username,
           email: this.email,
-          username: this.userName,
+          username: this.username,
           password: this.password,
-          vpassword:this.vpassword,
+          vpassword: this.vpassword,
           email: this.email,
           code: this.code
         }).then(({
@@ -175,8 +177,12 @@
           if (data && data.code == 200) {
             window.location.href = '/'
           }
-        }
-        )
+        }).catch(err => {
+          let data = err.response.data;
+          if (data.msg) {
+            this.$layer.msg(data.msg);
+          }
+        })
       }
     }
   }

@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-01-17 21:23:19
- * @LastEditTime : 2020-01-19 00:53:57
+ * @LastEditTime : 2020-01-22 01:00:34
  * @LastEditors  : Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /My-blog/server/interface/users.js
@@ -12,10 +12,16 @@ import nodeMailer from 'nodemailer';
 import User from '../dbs/models/users';
 import Config from '../dbs/config';
 import axios from './utils/axios';
-import { Auth } from '../middleware/auth';
+import {
+  Auth
+} from '../middleware/auth';
 import Passport from './utils/passport'
 
-import { singupValidate } from '../core/validat';
+import {
+  singupValidate
+} from '../core/validat';
+const crypto = require("crypto");
+
 
 let router = new Router({
   prefix: '/users'
@@ -34,7 +40,9 @@ router.post('/verify', new Auth().m, async (ctx, next) => {
   let username = ctx.request.body.username;
   let email = ctx.request.body.email;
 
-  await User.isRegistered({ email })
+  await User.isRegistered({
+    email
+  })
 
   const createTime = await Store.hget(`nodemail:${username}`, 'createTime');
   const saveExpire = await Store.hget(`nodemail:${username}`, 'expire');
@@ -131,25 +139,30 @@ router.post('/singup', singupValidate, async (ctx) => {
   }
 
   //验证是否注册
-  await User.isRegistered({ username });
+  await User.isRegistered({
+    username
+  });
 
-  await new User({
+  await User.createUser({
     username,
     password,
     email
-  }).createUser()
+  })
 
 })
 
 //登陆
 router.post('/signin', async (ctx, next) => {
-  return Passport.authenticate('local', function (err, user, info, atatus) {
+  let md5 = crypto.createHash("md5");
+  let md5Password = (md5.update(ctx.request.body.password)).digest('hex');
+  ctx.request.body.password = md5Password
+  return Passport.authenticate('local', async function (err, user, info, atatus) {
     if (err) {
       throw err;
     } else {
       if (user) {
-        new global.errs.Success('登陆成功');
-        return ctx.login(user)
+        await ctx.login(user)
+        throw new global.errs.Success('登陆成功');
       } else {
         throw new global.errs.HttpException(info)
       }
@@ -157,5 +170,34 @@ router.post('/signin', async (ctx, next) => {
   })(ctx, next)
 })
 
+//退出
+router.get('/exit', async (ctx, next) => {
+  await ctx.logout()
+  if (!ctx.isAuthenticated()) {
+    throw new global.errs.Success('退出成功');
+  } else {
+    throw new global.errs.HttpException();
+  }
+})
+
+//获取用户名
+router.get('/getUser', async (ctx) => {
+  //passport固定api
+  if (ctx.isAuthenticated()) {
+    const {
+      username,
+      power
+    } = ctx.session.passport.user;
+    ctx.body = {
+      username,
+      power
+    }
+  } else {
+    ctx.body = {
+      username: "",
+      power: 0
+    }
+  }
+})
 
 export default router

@@ -1,22 +1,27 @@
 <!--
  * @Author: your name
  * @Date: 2020-01-12 21:28:38
- * @LastEditTime : 2020-01-12 23:42:48
+ * @LastEditTime : 2020-01-22 00:48:14
  * @LastEditors  : Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /My-blog/components/side/login.vue
  -->
 <template>
   <div class="login">
-    <container-one :title="'请登陆'">
-      <form action="">
+    <container-one :title="user?'<i class=\'fa fa-quote-left\'></i>欢迎！<i class=\'fa fa-quote-right\'></i>':'请登陆'">
+      <div v-if="user" class="landing">
+        <img src="https://www.mmgal.com/wp-content/uploads/2015/12/2015121908514728.jpg" alt="">
+        <span class="username">{{user}}</span>
+        <button type="button" class="bg1" @click="exit">退出登陆</button>
+      </div>
+      <form action="" v-else>
         <div class="account flex">
           <span class="flex-grow-0"><i class="fa fa-user"></i></span>
-          <input type="text" name="userName" v-model="userName" class="outline-none flex-grow">
+          <input type="text" name="username" v-model="username" class="outline-none flex-grow">
         </div>
         <div class="password flex">
           <span class="flex-grow-0"><i class="fa fa-lock"></i></span>
-          <input type="password"  name="password" v-model="password" class="outline-none flex-grow">
+          <input type="password" name="password" v-model="password" class="outline-none flex-grow">
         </div>
         <label for="" class="remark">
           <input type="checkbox" />记住我的登陆信息
@@ -33,37 +38,79 @@
 <script>
   import containerOne from '../public/containerOne.vue'
   export default {
-    data(){
+    props: ['user'],
+    data() {
       return {
-        userName:'',
-        password:''
+        username: '',
+        password: ''
       }
     },
+
     components: {
       containerOne
     },
-    methods:{
+    computed: {
+
+    },
+    async mounted() {
+      //console.log(this.$store.state.user);
+      // const {
+      //   status,
+      //   data: {
+      //     user
+      //   }
+      // } = await this.$axios.get('/users/getUser');
+
+      // if (status == 200) {
+      //   this.user = user
+      // }
+    },
+    methods: {
       onSubmit() {
         this.$axios.post('/users/signin', {
-          username: this.userName,
+          username: this.username,
           password: this.password,
         }).then(({
           status,
           data
         }) => {
-          // if (data && data.code == 200) {
-          //   window.location.href = '/'
-          // }
-        }
-        )
+          window.location.href = '/'
+        })
+      },
+      exit() {
+        this.$axios.get('/users/exit').then(({
+          status,
+          data
+        }) => {
+          window.location.href = '/'
+        })
       }
     }
   }
+
 </script>
 
 <style lang="scss">
   .login {
     width: 100%;
+
+    img {
+      display: inline;
+      width: 54px;
+      height: 54px;
+      border-radius: 50%;
+    }
+
+    .username {
+      margin: 0 20px;
+      font-size: 14px;
+      color: #666;
+    }
+
+    .landing {
+      padding: 20px;
+      text-align: center;
+    }
 
     form {
       padding: 30px 20px;
@@ -107,6 +154,7 @@
         margin-bottom: 10px;
 
         input {
+          width: 16px;
           margin-right: 5px;
         }
       }
@@ -130,5 +178,4 @@
     }
 
   }
-
 </style>

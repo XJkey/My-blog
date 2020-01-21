@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-01-18 21:59:58
- * @LastEditTime : 2020-01-19 00:35:16
+ * @LastEditTime : 2020-01-21 11:19:54
  * @LastEditors  : Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /My-blog/middleware/exception.js
@@ -15,7 +15,6 @@ const catchError = async (ctx, next) => {
         const isHttpException = error instanceof HttpException;
         const isDev = global.dev;
         const isDatalizeError = error instanceof datalize.Error
-
         if (isDev && !isHttpException && !isDatalizeError) {
             throw error;
         }
@@ -23,7 +22,9 @@ const catchError = async (ctx, next) => {
         if (isDatalizeError) {
             ctx.status = 405;
             ctx.body = Object.assign({
-                errorCode: '10005'
+                errorCode: '10005',
+                msg: JSON.stringify(error.errors),
+                request: `${ctx.method} ${ctx.path}`
             }, error.toJSON());
         } else if (isHttpException) {
             ctx.body = {

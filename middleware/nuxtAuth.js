@@ -1,3 +1,11 @@
+/*
+ * @Author: your name
+ * @Date: 2020-01-19 17:48:26
+ * @LastEditTime : 2020-01-21 11:14:35
+ * @LastEditors  : Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: /My-blog/middleware/nuxtAuth.js
+ */
 export default async ({ route, req, error }) => {
     let level = 0;
     let path = route.path;

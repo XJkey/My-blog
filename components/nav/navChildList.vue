@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2020-01-11 21:22:16
- * @LastEditTime : 2020-01-14 00:19:58
+ * @LastEditTime : 2020-01-22 01:01:43
  * @LastEditors  : Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /My-blog/components/nav/navChildList.vue
@@ -69,5 +69,4 @@
 
     }
   }
-
 </style>

@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2020-01-15 20:33:18
- * @LastEditTime : 2020-01-15 22:45:15
+ * @LastEditTime : 2020-01-22 01:01:15
  * @LastEditors  : Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /My-blog/layouts/blank.vue
@@ -24,5 +24,4 @@
     background-color: #f2f2f2;
     display: inline-block;
   }
-
 </style>

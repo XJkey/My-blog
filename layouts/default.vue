@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2020-01-11 21:22:16
- * @LastEditTime : 2020-01-11 22:29:27
+ * @LastEditTime : 2020-01-21 21:23:18
  * @LastEditors  : Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /My-blog/layouts/default.vue
@@ -25,6 +25,28 @@ export default {
     hearderNav,
     xFooter
   },
+    async asyncData(ctx) {
+      console.log(14234)
+      let {
+        status,
+        data: {
+          username,
+          power
+        }
+      } = await ctx.$axios.get('/users/getUser');
+     
+      if (status === 200) {
+        return {
+          username,
+          power
+        }
+      } else {
+        return {
+          username: '',
+          power: 0
+        }
+      }
+    },
   mounted(){
     AOS.init();
   }

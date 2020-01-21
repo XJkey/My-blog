@@ -1,3 +1,11 @@
+/*
+ * @Author: your name
+ * @Date: 2020-01-19 17:48:26
+ * @LastEditTime : 2020-01-20 19:06:28
+ * @LastEditors  : Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: /My-blog/server/interface/utils/passport.js
+ */
 import passport from 'koa-passport';
 import LocalStrategy from 'passport-local';
 import UserModel from '../../dbs/models/users';

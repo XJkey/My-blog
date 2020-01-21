@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2020-01-11 21:22:16
- * @LastEditTime : 2020-01-12 22:50:30
+ * @LastEditTime : 2020-01-22 01:01:06
  * @LastEditors  : Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /My-blog/pages/index.vue
@@ -10,40 +10,63 @@
   <div>
     <div class="mainContent">
       <article-list></article-list>
-    </div> 
+    </div>
     <div class="side">
-      <search></search>  
-      <login style="margin-top: 30px;"></login>
+      <search></search>
+      <login :user='username' style="margin-top: 30px;"></login>
       <update-record></update-record>
       <random-articles></random-articles>
-    </div>   
+    </div>
   </div>
 </template>
 
 <script>
-import articleList from '../components/article/articleList'
-import search from '../components/side/search'
-import login from '../components/side/login'
-import updateRecord from '../components/side/updateRecord'
-import randomArticles from '../components/side/randomArticles'
-export default {
-  components:{
-    articleList,
-    search,
-    login,
-    updateRecord,
-    randomArticles
+  import articleList from '../components/article/articleList'
+  import search from '../components/side/search'
+  import login from '../components/side/login'
+  import updateRecord from '../components/side/updateRecord'
+  import randomArticles from '../components/side/randomArticles'
+  export default {
+    components: {
+      articleList,
+      search,
+      login,
+      updateRecord,
+      randomArticles
+    },
+    async asyncData(ctx) {
+      let {
+        status,
+        data: {
+          username,
+          power
+        }
+      } = await ctx.$axios.get('/users/getUser');
+      if (status === 200) {
+        return {
+          username,
+          power
+        }
+      } else {
+        return {
+          username: '',
+          power: 0
+        }
+      }
+    },
+
   }
-}
+
 </script>
 
 <style>
-  .mainContent{
+  .mainContent {
     display: inline-block;
     width: 780px;
     margin: 20px;
   }
-  .side{
+
+  .side {
     display: inline-block;
     vertical-align: top;
     width: 360px;
