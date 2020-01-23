@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2020-01-15 20:33:18
- * @LastEditTime : 2020-01-22 01:00:23
+ * @LastEditTime : 2020-01-22 20:29:04
  * @LastEditors  : Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /My-blog/pages/registered.vue
@@ -150,7 +150,6 @@
               }
             }).catch(err => {
               let data = err.response.data;
-              console.log(data.msg)
               this.sendCodeBtnDisabled = true;
 
               if (data.msg) {

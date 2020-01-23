@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-01-17 21:23:19
- * @LastEditTime : 2020-01-22 01:00:34
+ * @LastEditTime : 2020-01-22 12:37:29
  * @LastEditors  : Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /My-blog/server/interface/users.js
@@ -11,21 +11,15 @@ import Redis from 'koa-redis';
 import nodeMailer from 'nodemailer';
 import User from '../dbs/models/users';
 import Config from '../dbs/config';
-import axios from './utils/axios';
-import {
-  Auth
-} from '../middleware/auth';
+
+import { Auth } from '../middleware/auth';
 import Passport from './utils/passport'
 
-import {
-  singupValidate
-} from '../core/validat';
+import { singupValidate } from '../core/validat';
 const crypto = require("crypto");
 
 
-let router = new Router({
-  prefix: '/users'
-});
+let router = new Router({ prefix: '/users' });
 
 let Store = new Redis({
   port: Config.redis.post, // Redis port

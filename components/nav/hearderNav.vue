@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2020-01-11 21:22:16
- * @LastEditTime : 2020-01-22 01:00:44
+ * @LastEditTime : 2020-01-22 12:09:05
  * @LastEditors  : Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /My-blog/components/nav/hearderNav.vue
@@ -12,9 +12,9 @@
       <dt class="inline-block"><a href="#" class="inline-block  text-center px-4 py-4">My blog</a></dt>
       <dd v-for="(item,key) in navDatas" class="inline-block" :class="{active:active===key}" @mouseleave="active=''"
         :key="'navList'+key">
-        <a href="#" class="inline-block  text-center px-4 py-4" @mouseover="active=key">{{key}}</a>
-        <template v-if="item">
-          <child-list v-show="active==key" :list="item">
+        <a :href="item[1]" class="inline-block  text-center px-4 py-4" @mouseover="active=key">{{key}}</a>
+        <template v-if="item[0]">
+          <child-list v-show="active==key" :list="item[0]">
           </child-list>
         </template>
       </dd>
@@ -32,10 +32,10 @@
       return {
         power: '0',
         navDatas: {
-          '首页': false,
-          '技术类型': { 'JS': { 'sdas': '' }, 'python': { 'screpy': '' } },
-          '留言板': false,
-          '主题切换': false,
+          '首页': [false,'/'],
+          '技术类型': [{ 'JS': [{ 'sdas': '' }], 'python': [{ 'screpy': '' }] }],
+          '留言板': [false],
+          '主题切换': [false],
         },
         active: ''
       }

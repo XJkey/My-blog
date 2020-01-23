@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-01-20 18:01:02
- * @LastEditTime : 2020-01-20 20:34:42
+ * @LastEditTime : 2020-01-22 22:46:19
  * @LastEditors  : Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /My-blog/server/dbs/models/users.js
@@ -17,11 +17,11 @@ const UserSchema = new Schema({
   username: {
     type: String,
     unique: true,
-    require: true
+    required: true
   },
   password: {
     type: String,
-    require: true,
+    required: true,
     set(val) {
       const md5 = crypto.createHash("md5");
       let md5Sum = md5.update(val); // update 加密
@@ -31,7 +31,7 @@ const UserSchema = new Schema({
   },
   email: {
     type: String,
-    require: true
+    required: true
   },
   power: {
     type: Number,

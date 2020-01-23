@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-01-17 21:18:43
- * @LastEditTime : 2020-01-18 00:00:40
+ * @LastEditTime : 2020-01-22 13:02:21
  * @LastEditors  : Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /My-blog/server/index.js
@@ -23,7 +23,7 @@ import errors from './core/http-exception';
 import catchError from './middleware/exception';
 
 import users from './interface/users';
-
+import blogs from './interface/blogs';
 
 const app = new Koa();
 
@@ -32,7 +32,7 @@ const config = require('../nuxt.config.js')
 config.dev = app.env !== 'production'
 
 global.errs = errors;
-global.dev=config.dev;
+global.dev = config.dev;
 
 async function start() {
   // Instantiate nuxt.js
@@ -48,7 +48,7 @@ async function start() {
     //如果要以url方式链接，需要加上这个参数
     useNewUrlParser: true
   })
-  
+
   app.use(catchError);
 
   app.use(bodyParser({
@@ -79,7 +79,7 @@ async function start() {
     }
   }))
 
- 
+
 
   // Build in development
   if (config.dev) {
@@ -90,8 +90,10 @@ async function start() {
   }
   app.use(passport.initialize());
   app.use(passport.session());
+
   //路由在此处引用
-  app.use(users.routes()).use(users.allowedMethods())
+  app.use(users.routes()).use(users.allowedMethods());
+  app.use(blogs.routes()).use(blogs.allowedMethods());
 
   app.use((ctx) => {
     ctx.status = 200

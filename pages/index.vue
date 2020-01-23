@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2020-01-11 21:22:16
- * @LastEditTime : 2020-01-22 01:01:06
+ * @LastEditTime : 2020-01-23 17:06:10
  * @LastEditors  : Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /My-blog/pages/index.vue
@@ -35,24 +35,18 @@
       randomArticles
     },
     async asyncData(ctx) {
-      let {
-        status,
-        data: {
-          username,
-          power
-        }
-      } = await ctx.$axios.get('/users/getUser');
+      let { status, data: { username, power } } = await ctx.$axios.get('/users/getUser');
+      let { status: status1, data: data1 } = await ctx.$axios.get('/blogs/blogsList'+ctx.route.fullPath);
+      console.log(214, data1)
       if (status === 200) {
-        return {
-          username,
-          power
-        }
+        return { username, power }
       } else {
         return {
-          username: '',
-          power: 0
+          username: '', power: 0
         }
       }
+
+
     },
 
   }

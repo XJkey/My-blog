@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2020-01-11 21:22:16
- * @LastEditTime : 2020-01-22 01:01:43
+ * @LastEditTime : 2020-01-22 12:14:56
  * @LastEditors  : Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /My-blog/components/nav/navChildList.vue
@@ -10,9 +10,9 @@
   <div>
     <ul class="navChild">
       <li v-for="(item,key) in list" @mouseleave="active=''" style="position: relative;">
-        <a href="#" class="inline-block  text-center px-4 py-1" @mouseover="active=key">{{key}}</a>
-        <template v-if="item">
-          <child-list v-show="active==key" :list="item" class="childList">
+        <a :href="item[1]" class="inline-block  text-center px-4 py-1" @mouseover="active=key">{{key}}</a>
+        <template v-if="item[0]">
+          <child-list v-show="active==key" :list="item[0]" class="childList">
           </child-list>
         </template>
       </li>
