@@ -28,6 +28,17 @@
   </div>
 </template>
 
+<script>
+  export default {
+    async mounted() {
+      let { status, data: { username, power } } = await this.$axios.get('/users/getUser');
+      if (status === 200) {
+
+      }
+    }
+  }
+</script>
+
 <style lang="scss">
   .articleBar {
     width: 750px;
@@ -92,7 +103,7 @@
         .info {
           width: 100%;
           height: 100%;
-          background: rgba(0, 0, 0,0.6);
+          background: rgba(0, 0, 0, 0.6);
           color: rgba(255, 255, 255, 0.8);
           font-size: 25px;
           padding: 15px 25px;
@@ -100,5 +111,4 @@
       }
     }
   }
-
 </style>
