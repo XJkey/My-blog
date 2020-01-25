@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-01-22 12:35:20
- * @LastEditTime : 2020-01-23 16:30:30
+ * @LastEditTime : 2020-01-23 20:24:38
  * @LastEditors  : Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /My-blog/server/interface/blogs.js
@@ -54,34 +54,14 @@ router.post('/upHot', new Auth().m, async (ctx, next) => {
 
 router.get('/blogsList', async (ctx, next) => {
     const { pageNum = 1, pageSize = 10, s = '' } = ctx.request.query;
-    await Blogs.countDocuments({ // 获取数据条数
-        $or: [
-            { title: { '$regex': s, $options: '$i' } },
-            { type: { '$regex': s, $options: '$i' } }
-        ]
-    },async (err, count) => { //查询出结果返回
-        await Blogs.find({
-            $or: [
-                { title: { '$regex': s, $options: '$i' } },
-                { type: { '$regex': s, $options: '$i' } }
-            ]
-        })
-            .skip((pageNum - 1) * pageSize)
-            .limit(pageSize)
-            .sort({ 'updateTime': -1 })
-            .exec(async (err, doc) => {
-                try {
-                    if (!err && doc) {
-                        ctx.body = { code: 0, totalCount: count, msg: '列表获取成功', data: doc }
-                        return true;
-                    }
-                    ctx.body = { code: 1, msg: '后端出错' }
-                    return false;
-                } catch (e) {
-                    ctx.body = { code: 1, msg: '后端出错' }
-                }
-            })
-    })
+    let options = {
+        skip: (pageNum - 1) * pageSize,
+        limit: pageSize,
+        sort: { 'updateTime': -1 }
+    }
+    let res = await Blogs.find({}, null, options)
+    let total = await Blogs.countDocuments()
+    ctx.body = { code: 0, totalCount: total, msg: '列表获取成功', data: res }
 })
 
 export default router;

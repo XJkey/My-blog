@@ -1,7 +1,15 @@
+<!--
+ * @Author: your name
+ * @Date: 2020-01-15 20:33:18
+ * @LastEditTime : 2020-01-23 22:20:55
+ * @LastEditors  : Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: /My-blog/components/public/myPage.vue
+ -->
 <template>
     <div :class="['myPage',style]" style="margin: 20px;">
         <ul>
-            <li v-if='activePage!==1'>
+            <li v-if='activePage!==1&&count!==0'>
                 <a>«</a>
             </li>
             <li v-for="index in forPages">
@@ -13,7 +21,7 @@
             <li v-if='maxPage!=forPages'>
                 <a :class="{'active':activePage==maxPage}">{{maxPage}}</a>
             </li>
-            <li v-if='activePage!=maxPage&&forPages!=1'>
+            <li v-if='activePage!=maxPage&&forPages!=1&&count!==0'>
                 <a> »</a>
             </li>
         </ul>
@@ -22,10 +30,11 @@
 
 <script>
     export default {
+        props: ['totalCount'],
         data() {
             return {
                 //数据总数
-                count: 67,
+                count: this.totalCount,
                 //每一页显示多少个
                 item: 6,
                 //需要循环的页数(小于等于maxPaging)
@@ -35,24 +44,25 @@
                 //最大页数
                 maxPage: 0,
                 //当前选中页数
-                activePage: 2,
-
+                activePage: 1,
                 style: 'one'
             }
         },
         mounted() {
-            this.forPages = Math.ceil(this.count / this.item);
-            let pages = this.forPages
-            this.maxPage = pages;
-            if (pages > this.maxPaging) {
-                this.forPages = this.maxPaging - 1;
+            this.init()
+        },
+        watch: {
+            totalCount(newVal, oldVal) {
+                this.init()
             }
-
         },
         methods: {
-            p: function (index) {
-                if (index) {
-
+            init: function () {
+                this.forPages = Math.ceil(this.totalCount / this.item);
+                let pages = this.forPages
+                this.maxPage = pages;
+                if (pages > this.maxPaging) {
+                    this.forPages = this.maxPaging - 1;
                 }
             }
         }
