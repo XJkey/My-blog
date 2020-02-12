@@ -1,10 +1,10 @@
 /*
  * @Author: your name
  * @Date: 2020-01-20 18:01:02
- * @LastEditTime : 2020-01-23 15:12:39
+ * @LastEditTime : 2020-02-03 02:13:26
  * @LastEditors  : Please set LastEditors
  * @Description: In User Settings Edit
- * @FilePath: /My-blog/server/dbs/models/users.js
+ * @FilePath: /My-blog/server/dbs/models/blogs.js
  */
 import mongoose from 'mongoose';
 

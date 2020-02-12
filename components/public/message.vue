@@ -1,14 +1,16 @@
 <!--
  * @Author: your name
  * @Date: 2020-01-14 22:46:28
- * @LastEditTime : 2020-01-15 00:54:01
+ * @LastEditTime : 2020-02-13 01:32:00
  * @LastEditors  : Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /My-blog/components/public/message.vue
  -->
 <template>
     <div class='message-box'>
-        <h3 class="comments-title"><i class="fa fa-pencil"></i>欢迎留言</h3>
+        <h3 class="comments-title"><i class="fa fa-pencil"></i>欢迎留言 
+            <button style="padding: 5px;background-color: #d9534f;color: #fff;" @click='cancelMessage' v-show="isCancel">取消留言</button>
+        </h3>
 
         <div class="">
             <textarea class='outline-none' placeholder="赶快发表你的见解吧！" name="" id="" cols="30" rows="10"></textarea>
@@ -20,7 +22,12 @@
 
 <script>
 export default {
-
+    props:['isCancel'],
+    methods:{
+        cancelMessage:function(){
+            this.$emit('cancelMessage')
+        }
+    }
 }
 </script>
 

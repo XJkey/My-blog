@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-01-17 21:18:43
- * @LastEditTime : 2020-01-22 13:02:21
+ * @LastEditTime : 2020-02-11 17:19:49
  * @LastEditors  : Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /My-blog/server/index.js
@@ -24,6 +24,8 @@ import catchError from './middleware/exception';
 
 import users from './interface/users';
 import blogs from './interface/blogs';
+import message from './interface/message';
+
 
 const app = new Koa();
 
@@ -94,6 +96,7 @@ async function start() {
   //路由在此处引用
   app.use(users.routes()).use(users.allowedMethods());
   app.use(blogs.routes()).use(blogs.allowedMethods());
+  app.use(message.routes()).use(message.allowedMethods());
 
   app.use((ctx) => {
     ctx.status = 200

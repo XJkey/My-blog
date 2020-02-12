@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2020-01-15 20:33:18
- * @LastEditTime : 2020-01-23 15:42:51
+ * @LastEditTime : 2020-02-03 00:05:24
  * @LastEditors  : Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /My-blog/pages/writeArticles.vue
@@ -34,7 +34,7 @@
     methods: {
       submit: function () {
 
-        let id = this.$layer.loading();
+        let layerId = this.$layer.loading();
         let type = this.type ? this.type.split(',') : null;
         this.$axios.post('/blogs/create',
           { title: this.title, type, content: this.content, contentDOM: this.contentDOM })
@@ -52,9 +52,9 @@
             let data = err.response.data;
             if (data.msg) {
               this.$layer.msg(data.msg);
-            }else{
+            } else {
               this.$layer.msg('发布失败');
-              this.$layer.close(id);
+              this.$layer.close(layerId);
             }
           })
       },

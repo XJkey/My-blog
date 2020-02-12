@@ -1,27 +1,19 @@
 <!--
  * @Author: 随机文章
  * @Date: 2020-01-12 22:48:35
- * @LastEditTime : 2020-01-12 23:42:58
+ * @LastEditTime : 2020-02-10 18:45:08
  * @LastEditors  : Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /My-blog/components/side/randomArticles.vue
  -->
 <template>
-  <div class="randomArticles" data-aos="fade-up">
+  <div class="randomArticles">
     <container-one :title="'随机文章'">
       <div class="content">
-        <ul class="">
-          <li>
-            <span class="post-title">20191123 向日葵：天空鹅卵石 更新汉化补丁v1.5</span>
-            <span class="badge float-right">37,548 ℃</span>
-          </li>
-          <li>
-            <span class="post-title">20191123 向日葵：天空鹅卵石 更新汉化补丁v1.5</span>
-            <span class="badge float-right">37,548 ℃</span>
-          </li>
-          <li>
-            <span class="post-title">20191123 向日葵：天空鹅卵石 更新汉化补丁v1.5</span>
-            <span class="badge float-right">37,548 ℃</span>
+        <ul>
+          <li v-for="(item, index) in Blogs" :key="index">
+            <span class="post-title">{{item.title}}</span>
+            <span class="badge float-right">{{item.hot}}℃</span>
           </li>
         </ul>
       </div>
@@ -34,7 +26,19 @@
   export default {
     components: {
       containerOne
-    }
+    },
+    data() {
+      return {
+        Blogs: []
+      }
+    },
+    async mounted() {
+      let { status, data } = await this.$axios.get('/blogs/getRandomBlogs');
+      if (status === 200) {
+        this.Blogs = data.data;
+      }
+
+    },
   }
 </script>
 
@@ -58,6 +62,11 @@
 
         .post-title {
           width: 75%;
+          overflow: hidden;
+          display: inline-block;
+          height: 100%;
+          text-overflow: ellipsis;
+          white-space: nowrap;
         }
 
 

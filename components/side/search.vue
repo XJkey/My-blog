@@ -1,8 +1,16 @@
+<!--
+ * @Author: your name
+ * @Date: 2020-01-12 17:14:52
+ * @LastEditTime : 2020-02-03 02:22:53
+ * @LastEditors  : Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: /My-blog/components/side/search.vue
+ -->
 <template>
   <div class="search">
     <form action="" class="flex">
-      <input type="text" class="outline-none flex-grow" :placeholder="placeholder">
-      <button type="submit" class="flex-grow-0">,7</button>
+      <input type="text" class="outline-none flex-grow" v-model="searchContent" :placeholder="placeholder">
+      <button @click='search' type="button" class="flex-grow-0"><i class="fa fa-search"></i></button>
     </form>
   </div>
 </template>
@@ -11,6 +19,7 @@
   export default {
     data() {
       return {
+        searchContent: '',
         placeholder: '',
         //内容的第几个字节
         iPlaceholder: 0,
@@ -23,7 +32,7 @@
       this.timer = window.setInterval(this.inputPlaceholder, 100)
     },
     methods: {
-      inputPlaceholder : function() {
+      inputPlaceholder: function () {
         let i = this.iContent
         let j = this.pContent.length;
         let k = this.iPlaceholder;
@@ -33,15 +42,18 @@
           if (k > this.pContent[i].length - 1) {
             this.iPlaceholder = 0;
             window.clearInterval(this.timer)
-            setTimeout(()=>{
-                this.timer = window.setInterval(this.inputPlaceholder, 100)
-            },500)
+            setTimeout(() => {
+              this.timer = window.setInterval(this.inputPlaceholder, 100)
+            }, 500)
             this.iContent++;
             if (this.iContent > j - 1) {
               this.iContent = 0
             }
           }
         }
+      },
+      search: function () {
+        window.location.href='/?s=' + this.searchContent;
       }
     },
   }
@@ -94,5 +106,4 @@
     }
 
   }
-
 </style>
