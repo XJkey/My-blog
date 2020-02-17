@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2020-01-15 20:33:18
- * @LastEditTime : 2020-02-03 00:47:02
+ * @LastEditTime : 2020-02-14 23:07:02
  * @LastEditors  : Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /My-blog/pages/writeArticles.vue
@@ -58,11 +58,11 @@
           content: this.content,
           contentDOM: this.contentDOM
         }
-        console.log(editData)
         let layerId = this.$layer.loading();
         this.$axios.post('/blogs/update',
           { id, editData })
           .then(({ status, data }) => {
+            console.log(data)
             this.$layer.msg(data.msg, {
               time: 1
             }, layerid => {

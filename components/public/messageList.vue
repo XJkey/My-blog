@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2020-02-11 17:37:39
- * @LastEditTime : 2020-02-13 01:50:42
+ * @LastEditTime : 2020-02-13 02:19:26
  * @LastEditors  : Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /My-blog/components/public/messagelist.vue
@@ -21,7 +21,8 @@
                 真的感谢弟弟君，能玩到这么多好冲的游戏
                 真的感谢弟弟君，能玩到这么多好冲的游戏
             </p>
-            <a @click="answer($event)">登录以回复</a>
+            <a @click="answer($event)" v-if="isAnswer">回复</a>
+            <a href="/" v-else>登录以回复</a>
         </div>
         <div class="msgSlot">
         </div>
@@ -32,9 +33,23 @@
 <script>
     export default {
         name: 'massageList',
+        data() {
+            return {
+                isAnswer: false
+            }
+        },
+        async mounted() {
+            let { status, data: { username, power } } = await this.$axios.get('/users/getUser');
+            if (status === 200) {
+                console.log(username)
+                if (username) {
+                    this.isAnswer = true
+                }
+            }
+        },
         methods: {
             answer: function (e) {
-                this.$emit('answer',e)
+                this.$emit('answer', e)
             }
         }
     }
