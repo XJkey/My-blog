@@ -2,7 +2,7 @@
   <div class="articleBar mx-auto mybody3 rounded"  data-aos="flip-up">
     <div class="dataLabel text-center">
       <span class="month">{{month}}月</span>
-      <span class="day">28</span>
+      <span class="day">{{day}}</span>
     </div>
     <div class="articleTitle text-center">
       <div>

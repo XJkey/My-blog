@@ -10,19 +10,19 @@
     <div :class="['myPage',style]" style="margin: 20px;">
         <ul>
             <li v-if='activePage!==1&&count!==0'>
-                <a>«</a>
+                <a @click="click('-1')">«</a>
             </li>
             <li v-for="index in forPages">
-                <a href="" :class="{'active':activePage==index}">{{index}}</a>
+                <a @click='click(index)' :class="{'active':activePage==index}">{{index}}</a>
             </li>
             <li v-if='maxPage>maxPaging'>
                 <a href="javascript:">...</a>
             </li>
             <li v-if='maxPage!=forPages'>
-                <a :class="{'active':activePage==maxPage}">{{maxPage}}</a>
+                <a @click='click(maxPage)' :class="{'active':activePage==maxPage}">{{maxPage}}</a>
             </li>
             <li v-if='activePage!=maxPage&&forPages!=1&&count!==0'>
-                <a> »</a>
+                <a @click="click('+1')"> »</a>
             </li>
         </ul>
     </div>
@@ -35,7 +35,7 @@
             return {
                 //数据总数
                 count: this.totalCount,
-                //每一页显示多少个
+                //每一页显示多少个 //6
                 item: 6,
                 //需要循环的页数(小于等于maxPaging)
                 forPages: 1,
@@ -64,6 +64,9 @@
                 if (pages > this.maxPaging) {
                     this.forPages = this.maxPaging - 1;
                 }
+            },
+            click: function (n) {
+                this.changePage(n)
             }
         }
     }

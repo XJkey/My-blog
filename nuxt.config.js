@@ -41,7 +41,8 @@ module.exports = {
     { src: '@/plugins/vue-mavon-editor', srr: false },
     { src: '@/plugins/vee-validate' },
     { src: '@/plugins/vue-layert' },
-    { src: '@/plugins/moment' }
+    { src: '@/plugins/moment' },
+    { src: '@/plugins/changePage' }
   ],
   /*
   ** Nuxt.js dev-modules

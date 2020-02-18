@@ -10,7 +10,7 @@
   <div>
     <ul class="navChild">
       <li v-for="(item,key) in list" @mouseleave="active=''" style="position: relative;">
-        <a :href="item[1]" class="inline-block  text-center px-4 py-1" @mouseover="active=key">{{key}}</a>
+        <a style="width: 100%;" :href="item[1]" class="inline-block  text-center px-4 py-1" @mouseover="active=key">{{key}}</a>
         <template v-if="item[0]">
           <child-list v-show="active==key" :list="item[0]" class="childList">
           </child-list>

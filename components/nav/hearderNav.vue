@@ -33,7 +33,10 @@
         power: '0',
         navDatas: {
           '首页': [false, '/'],
-          '技术类型': [{ 'JS': [{ 'sdas': '' }], 'python': [{ 'screpy': '' }] }],
+          '技术类型': [{
+            'javascript': [{ 'nuxt.js': [false, '/?s=nuxt.js'] }, '/?s=javascript'],
+            'python': [{ 'screpy': [false, '/?s=screpy'] }, '/?s=python']
+          }],
           '留言板': [false],
           '主题切换': [false],
         },
