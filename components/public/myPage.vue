@@ -2,7 +2,7 @@
  * @Author: your name
  * @Date: 2020-01-15 20:33:18
  * @LastEditTime : 2020-02-13 03:31:05
- * @LastEditors  : Please set LastEditors
+ * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /My-blog/components/public/myPage.vue
  -->
@@ -10,19 +10,19 @@
     <div :class="['myPage',style]" style="margin: 20px;">
         <ul>
             <li v-if='activePage!==1&&count!==0'>
-                <a @click="click('-1')">«</a>
+                <a @click="changePage('-1')">«</a>
             </li>
             <li v-for="index in forPages">
-                <a @click='click(index)' :class="{'active':activePage==index}">{{index}}</a>
+                <a @click='changePage(index)' :class="{'active':activePage==index}">{{index}}</a>
             </li>
             <li v-if='maxPage>maxPaging'>
                 <a href="javascript:">...</a>
             </li>
             <li v-if='maxPage!=forPages'>
-                <a @click='click(maxPage)' :class="{'active':activePage==maxPage}">{{maxPage}}</a>
+                <a @click='changePage(maxPage)' :class="{'active':activePage==maxPage}">{{maxPage}}</a>
             </li>
             <li v-if='activePage!=maxPage&&forPages!=1&&count!==0'>
-                <a @click="click('+1')"> »</a>
+                <a @click="changePage('+1')"> »</a>
             </li>
         </ul>
     </div>
@@ -65,8 +65,24 @@
                     this.forPages = this.maxPaging - 1;
                 }
             },
-            click: function (n) {
-                this.changePage(n)
+            changePage: function (index) {
+                let query = this.$route.query;
+                let hash = ''
+                let pageNum = query.pageNum ? query.pageNum : 1
+                if (index === '+1') {
+                    pageNum++
+                } else if (index === '-1') {
+                    pageNum--
+                } else {
+                    pageNum = index
+                }
+                query.pageNum = pageNum.toString();
+                for (var item in query) {
+                    hash += item + '=' + query[item] + '&'
+                }
+                hash = hash.substring(0, hash.length - 1)
+
+                window.location.href = 'http://' + window.location.host + window.location.pathname + '?' + hash
             }
         }
     }

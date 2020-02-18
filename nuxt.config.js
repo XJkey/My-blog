@@ -2,7 +2,7 @@
  * @Author: your name
  * @Date: 2020-01-13 22:07:37
  * @LastEditTime : 2020-02-03 01:29:13
- * @LastEditors  : Please set LastEditors
+ * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /My-blog/nuxt.config.js
  */
@@ -41,8 +41,7 @@ module.exports = {
     { src: '@/plugins/vue-mavon-editor', srr: false },
     { src: '@/plugins/vee-validate' },
     { src: '@/plugins/vue-layert' },
-    { src: '@/plugins/moment' },
-    { src: '@/plugins/changePage' }
+    { src: '@/plugins/moment' }
   ],
   /*
   ** Nuxt.js dev-modules
