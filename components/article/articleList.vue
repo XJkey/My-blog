@@ -2,7 +2,7 @@
  * @Author: your name
  * @Date: 2020-01-11 21:22:16
  * @LastEditTime : 2020-02-10 19:01:37
- * @LastEditors  : Please set LastEditors
+ * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /My-blog/components/article/articleList.vue
  -->
@@ -12,7 +12,7 @@
             <article-bar :barData='item'></article-bar>
         </template>
         <div v-if='!articleListData.data.length' class="mx-auto mybody3 rounded" style="margin: 15px;padding: 20px;">暂无数据</div>
-        <myPage v-if='!!articleListData.data.length' :totalCount='articleListData.totalCount'></myPage>
+        <myPage v-if='!!articleListData.data.length' :item='6' :totalCount='articleListData.totalCount'></myPage>
     </div>
 </template>
 

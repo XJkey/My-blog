@@ -9,7 +9,7 @@
 <template>
     <div :class="['myPage',style]" style="margin: 20px;">
         <ul>
-            <li v-if='activePage!==1&&count!==0'>
+            <li v-if='activePage!=1&&count!=0'>
                 <a @click="changePage('-1')">«</a>
             </li>
             <li v-for="index in forPages">
@@ -21,7 +21,7 @@
             <li v-if='maxPage!=forPages'>
                 <a @click='changePage(maxPage)' :class="{'active':activePage==maxPage}">{{maxPage}}</a>
             </li>
-            <li v-if='activePage!=maxPage&&forPages!=1&&count!==0'>
+            <li v-if='activePage!=maxPage&&forPages!=1&&count!=0'>
                 <a @click="changePage('+1')"> »</a>
             </li>
         </ul>
@@ -30,13 +30,13 @@
 
 <script>
     export default {
-        props: ['totalCount'],
+        props: ['totalCount', 'item'],
         data() {
             return {
                 //数据总数
                 count: this.totalCount,
                 //每一页显示多少个 //6
-                item: 6,
+                //item: 6,
                 //需要循环的页数(小于等于maxPaging)
                 forPages: 1,
                 //最大分页数
@@ -64,6 +64,9 @@
                 if (pages > this.maxPaging) {
                     this.forPages = this.maxPaging - 1;
                 }
+                let query = this.$route.query;
+                let pageNum = query.pageNum ? query.pageNum : 1
+                this.activePage = pageNum
             },
             changePage: function (index) {
                 let query = this.$route.query;

@@ -40,6 +40,7 @@
                     return
                 }
                 const { status, data } = await this.$axios.post('/message/add', { content: this.content, ...this.$store.state.message });
+                this.content = '';
                 this.$emit('hackReset')
             }
         },

@@ -48,7 +48,7 @@
                 </div>
             </template>
         </div>
-        <myPage v-if='!!msgListData.data.length' :totalCount='msgListData.totalCount'></myPage>
+        <myPage v-if='!!msgListData.data.length' :item='6' :totalCount='msgListData.totalCount'></myPage>
     </div>
 </template>
 

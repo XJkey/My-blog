@@ -2,7 +2,7 @@
  * @Author: your name
  * @Date: 2020-01-15 20:33:18
  * @LastEditTime : 2020-01-31 17:28:15
- * @LastEditors  : Please set LastEditors
+ * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /My-blog/pages/details.vue
  -->
@@ -10,7 +10,6 @@
     <div>
         <div class="mainContent">
             <article-details :articleDetaiData='articleDetaiData'></article-details>
-            <!-- <myPage></myPage> -->
             <comment-box></comment-box>
         </div>
     </div>
@@ -19,12 +18,10 @@
 <script>
     import articleDetails from '../components/details/articleDetails.vue';
     import commentBox from '../components/details/commentBox.vue'
-    import myPage from '../components/public/myPage.vue'
     export default {
         components: {
             articleDetails,
             commentBox,
-            myPage
         },
         async asyncData(ctx) {
             let obj = {}

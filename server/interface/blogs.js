@@ -2,7 +2,7 @@
  * @Author: your name
  * @Date: 2020-01-22 12:35:20
  * @LastEditTime : 2020-02-03 02:26:21
- * @LastEditors  : Please set LastEditors
+ * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /My-blog/server/interface/blogs.js
  */
@@ -96,7 +96,7 @@ router.get("/details", async (ctx, next) => {
 
 
 router.get("/blogsList", async (ctx, next) => {
-  const { pageNum = 1, pageSize = 10, s = "" } = ctx.request.query;
+  const { pageNum = 1, pageSize = 6, s = "" } = ctx.request.query;
   let options = {
     skip: (pageNum - 1) * pageSize,
     limit: pageSize,

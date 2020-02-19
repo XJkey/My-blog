@@ -34,7 +34,7 @@ router.post("/add", new Auth(1).m, async (ctx, next) => {
 })
 
 router.get("/list", async (ctx, next) => {
-  const { pageNum = 1, pageSize = 10, articleId = null } = ctx.request.query;
+  const { articleId = null, pageNum = 1, pageSize = articleId ? 6 : 12 } = ctx.request.query;
   let options = {
     skip: (pageNum - 1) * pageSize,
     limit: pageSize,
