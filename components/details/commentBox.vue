@@ -2,18 +2,14 @@
  * @Author: your name
  * @Date: 2020-01-14 22:46:28
  * @LastEditTime : 2020-02-13 01:50:10
- * @LastEditors  : Please set LastEditors
+ * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /My-blog/components/details/commentBox.vue
  -->
 <template>
   <div class="commentBox">
-    <h3 class="comments-title"><i class="fa fa-comments"></i> 92 条评论</h3>
-    <div class="loading-comments">
-      <i class="fa fa-spinner fa-spin"></i>
-    </div>
-    <messageList @answer='answer'></messageList>
-    <message :isCancel='messageCancel' @cancelMessage='cancelMessage' ref=myMsg></message>
+    <messageList @answer='answer' v-if="isHackReset"></messageList>
+    <message :isCancel='messageCancel' @cancelMessage='cancelMessage' @hackReset='hackReset' ref=myMsg></message>
   </div>
 </template>
 
@@ -24,7 +20,8 @@
   export default {
     data() {
       return {
-        messageCancel: false
+        messageCancel: false,
+        isHackReset: true
       }
     },
     components: {
@@ -44,7 +41,13 @@
         this.$store.commit('message/setByCriticsName', null);
         this.$store.commit('message/setByCriticsId', null);
         this.$store.commit('message/setParentId', null);
-        this.$store.commit('message/setCommentsId', null);   
+        this.$store.commit('message/setCommentsId', null);
+      },
+      hackReset: function () {
+        this.isHackReset = false
+        this.$nextTick(() => {
+          this.isHackReset = true
+        })
       }
     }
   }
@@ -52,9 +55,5 @@
 </script>
 
 <style lang="scss">
-  .loading-comments {
-    font-size: 50px;
-    text-align: center;
-    color: #d9534f;
-  }
+
 </style>

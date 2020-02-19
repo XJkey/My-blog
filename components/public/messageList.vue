@@ -2,13 +2,17 @@
  * @Author: your name
  * @Date: 2020-02-11 17:37:39
  * @LastEditTime : 2020-02-13 02:19:26
- * @LastEditors  : Please set LastEditors
+ * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /My-blog/components/public/messagelist.vue
  -->
 <template>
     <div>
-        <div v-for="(item,index) in msgListData.data" style="margin:10px 0 ;" class="comment-box mybody3">
+        <h3 class="comments-title"><i class="fa fa-comments"></i> {{msgListData.allTotal||0}} 条评论</h3>
+        <div class="loading-comments" v-if='!msgListData.code'>
+            <i class="fa fa-spinner fa-spin"></i>
+        </div>
+        <div v-for="(item,index) in msgListData.data" style="margin:20px 0 ;" class="comment-box mybody3">
             <div class="comment-meta">
                 <span>{{item.username}} <em>说道：</em></span>
                 <time class="float-right">{{item.createTime | dateformat}}</time>
@@ -22,7 +26,7 @@
             <div class="msgSlot">
             </div>
             <!-- <massageList style="margin:20px;"></massageList> -->
-            <template v-for="(childItem,childIndex) in item.child" >
+            <template v-for="(childItem,childIndex) in item.child">
                 <div class="comment-box mybody3" style="margin:10px;">
                     <div class="comment-meta">
                         <span>{{childItem.username}} <em>说道：</em></span>
@@ -30,8 +34,12 @@
                     </div>
                     <div class="comment-body">
                         <p>{{childItem.content}}
+                            <i v-if='childItem.parentComments'>
+                                <i style="color: #3a87ad;">//@{{childItem.parentComments[0].username}}：</i>
+                                {{childItem.parentComments[0].content}}</i>
                         </p>
-                        <a @click="answer($event,3,childItem.username,childItem.userid,item._id,childItem._id)" v-if="isAnswer">回复</a>
+                        <a @click="answer($event,3,childItem.username,childItem.userid,item._id,childItem._id)"
+                            v-if="isAnswer">回复</a>
                         <a href="/" v-else>登录以回复</a>
                     </div>
                     <div class="msgSlot">
@@ -67,29 +75,38 @@
 
             let { status: status1, data } = await this.$axios.get('/message/list', { params: { articleId: this.$store.state.message.articleId, pageNum } });
             if (status1 === 200) {
-                console.log(data)
                 this.msgListData = data
             }
         },
         methods: {
-            answer: function (e, n, name, id, _id,setCommentsId) {
+            answer: function (e, n, name, id, _id, commentsId) {
                 this.$emit('answer', e)
                 this.$store.commit('message/setType', n);
                 this.$store.commit('message/setByCriticsName', name);
                 this.$store.commit('message/setByCriticsId', id);
                 this.$store.commit('message/setParentId', _id);
-                this.$store.commit('message/setCommentsId', setCommentsId);   
+                this.$store.commit('message/setCommentsId', commentsId);
             }
         }
     }
 </script>
 
 <style lang="scss">
+    .loading-comments {
+        font-size: 50px;
+        text-align: center;
+        color: #d9534f;
+    }
+
     .comment-box {
         border-radius: 4px;
         padding: 2px;
         font-size: 12px;
         transition: all .5s;
+
+        i {
+            font-style: normal;
+        }
 
         &:hover {
             color: #000;
@@ -128,6 +145,7 @@
 
             p {
                 margin: 0 0 10px;
+                word-wrap: break-word;
             }
 
             a {

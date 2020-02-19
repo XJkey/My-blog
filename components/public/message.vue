@@ -2,7 +2,7 @@
  * @Author: your name
  * @Date: 2020-01-14 22:46:28
  * @LastEditTime : 2020-02-13 01:32:00
- * @LastEditors  : Please set LastEditors
+ * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /My-blog/components/public/message.vue
  -->
@@ -35,18 +35,12 @@
                 this.$emit('cancelMessage')
             },
             addMessage: async function () {
-                // let articleTitle = this.$store.state.message.articleTitle;
-                // let articleId = this.$store.state.message.articleId;
-                // let type = this.$store.state.message.type;
-                // console.log(articleTitle, articleId, type)   
-                // byCriticsName:null,
-                //byCriticsId:null
                 if (!this.content) {
                     this.$layer.msg('请输入内容');
                     return
                 }
                 const { status, data } = await this.$axios.post('/message/add', { content: this.content, ...this.$store.state.message });
-                console.log(status, data)
+                this.$emit('hackReset')
             }
         },
     }

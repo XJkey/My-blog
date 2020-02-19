@@ -1,3 +1,11 @@
+/*
+ * @Author: your name
+ * @Date: 2020-02-19 19:42:28
+ * @LastEditTime: 2020-02-19 19:49:03
+ * @LastEditors: your name
+ * @Description: In User Settings Edit
+ * @FilePath: /My-blog/store/message.js
+ */
 const state = () => ({
     parentId: null,
     commentsId:null,
@@ -28,7 +36,7 @@ const mutations = {
         state.parentId = val
     },
     setCommentsId(state, val) {
-        state.parentId = val
+        state.commentsId = val
     }
 }
 
