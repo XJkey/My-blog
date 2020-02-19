@@ -34,8 +34,12 @@
             } else {
                 obj.articleDetaiData = {}
             }
+            ctx.store.commit('message/setArticleTitle',  obj.articleDetaiData.title);
+            ctx.store.commit('message/setArticleId',  obj.articleDetaiData._id);
+            ctx.store.commit('message/setType',  1);
+            
             return obj
-        }
+        },
     }
 </script>
 

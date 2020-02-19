@@ -7,49 +7,78 @@
  * @FilePath: /My-blog/components/public/messagelist.vue
  -->
 <template>
-    <div class="comment-box mybody3">
-        <div class="comment-meta">
-            <span>头像老乌鸦 <em>说道：</em></span>
-            <time class="float-right" datetime="2020-01-11T00:49:36+00:00"> 2020年1月11日 上午12:49 </time>
+    <div>
+        <div v-for="(item,index) in msgListData.data" style="margin:10px 0 ;" class="comment-box mybody3">
+            <div class="comment-meta">
+                <span>{{item.username}} <em>说道：</em></span>
+                <time class="float-right">{{item.createTime | dateformat}}</time>
+            </div>
+            <div class="comment-body">
+                <p>{{item.content}}
+                </p>
+                <a @click="answer($event,2,item.username,item.userid,item._id)" v-if="isAnswer">回复</a>
+                <a href="/" v-else>登录以回复</a>
+            </div>
+            <div class="msgSlot">
+            </div>
+            <!-- <massageList style="margin:20px;"></massageList> -->
+            <template v-for="(childItem,childIndex) in item.child" >
+                <div class="comment-box mybody3" style="margin:10px;">
+                    <div class="comment-meta">
+                        <span>{{childItem.username}} <em>说道：</em></span>
+                        <time class="float-right"> {{childItem.createTime | dateformat}} </time>
+                    </div>
+                    <div class="comment-body">
+                        <p>{{childItem.content}}
+                        </p>
+                        <a @click="answer($event,3,childItem.username,childItem.userid,item._id,childItem._id)" v-if="isAnswer">回复</a>
+                        <a href="/" v-else>登录以回复</a>
+                    </div>
+                    <div class="msgSlot">
+                    </div>
+                    <!-- <massageList style="margin:20px;"></massageList> -->
+                </div>
+            </template>
         </div>
-        <div class="comment-body">
-            <p>真的感谢弟弟君，能玩到这么多好冲的游戏
-                真的感谢弟弟君，能玩到这么多好冲的游戏
-                真的感谢弟弟君，能玩到这么多好冲的游戏
-                真的感谢弟弟君，能玩到这么多好冲的游戏
-                真的感谢弟弟君，能玩到这么多好冲的游戏
-                真的感谢弟弟君，能玩到这么多好冲的游戏
-                真的感谢弟弟君，能玩到这么多好冲的游戏
-            </p>
-            <a @click="answer($event)" v-if="isAnswer">回复</a>
-            <a href="/" v-else>登录以回复</a>
-        </div>
-        <div class="msgSlot">
-        </div>
-        <!-- <massageList style="margin:20px;"></massageList> -->
+        <myPage v-if='!!msgListData.data.length' :totalCount='msgListData.totalCount'></myPage>
     </div>
 </template>
 
 <script>
+    import myPage from '../public/myPage'
     export default {
         name: 'massageList',
+        components: { myPage },
         data() {
             return {
-                isAnswer: false
+                isAnswer: false,
+                msgListData: { data: [] }
             }
         },
         async mounted() {
+            let query = this.$route.query;
+            let pageNum = query.pageNum ? query.pageNum : 1
             let { status, data: { username, power } } = await this.$axios.get('/users/getUser');
             if (status === 200) {
-                console.log(username)
                 if (username) {
                     this.isAnswer = true
                 }
             }
+
+            let { status: status1, data } = await this.$axios.get('/message/list', { params: { articleId: this.$store.state.message.articleId, pageNum } });
+            if (status1 === 200) {
+                console.log(data)
+                this.msgListData = data
+            }
         },
         methods: {
-            answer: function (e) {
+            answer: function (e, n, name, id, _id,setCommentsId) {
                 this.$emit('answer', e)
+                this.$store.commit('message/setType', n);
+                this.$store.commit('message/setByCriticsName', name);
+                this.$store.commit('message/setByCriticsId', id);
+                this.$store.commit('message/setParentId', _id);
+                this.$store.commit('message/setCommentsId', setCommentsId);   
             }
         }
     }

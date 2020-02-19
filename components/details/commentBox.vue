@@ -24,7 +24,7 @@
   export default {
     data() {
       return {
-        messageCancel:false
+        messageCancel: false
       }
     },
     components: {
@@ -34,12 +34,17 @@
     methods: {
       answer: function (e) {
         e.srcElement.parentNode.nextElementSibling.appendChild(this.$refs.myMsg.$el);
-        this.messageCancel=true
+        this.messageCancel = true
       },
-      cancelMessage:function(){
-        let commentBox=document.getElementsByClassName('commentBox')[0]
+      cancelMessage: function () {
+        let commentBox = document.getElementsByClassName('commentBox')[0]
         commentBox.appendChild(this.$refs.myMsg.$el);
-        this.messageCancel=false
+        this.messageCancel = false
+        this.$store.commit('message/setType', 1);
+        this.$store.commit('message/setByCriticsName', null);
+        this.$store.commit('message/setByCriticsId', null);
+        this.$store.commit('message/setParentId', null);
+        this.$store.commit('message/setCommentsId', null);   
       }
     }
   }

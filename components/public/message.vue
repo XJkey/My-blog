@@ -8,54 +8,78 @@
  -->
 <template>
     <div class='message-box'>
-        <h3 class="comments-title"><i class="fa fa-pencil"></i>欢迎留言 
-            <button style="padding: 5px;background-color: #d9534f;color: #fff;" @click='cancelMessage' v-show="isCancel">取消留言</button>
+        <h3 class="comments-title"><i class="fa fa-pencil"></i>欢迎留言
+            <button style="padding: 5px;background-color: #d9534f;color: #fff;" @click='cancelMessage'
+                v-show="isCancel">取消留言</button>
         </h3>
 
         <div class="">
-            <textarea class='outline-none' placeholder="赶快发表你的见解吧！" name="" id="" cols="30" rows="10"></textarea>
+            <textarea class='outline-none' placeholder="赶快发表你的见解吧！" v-model='content' name="content" id="" cols="30"
+                rows="10"></textarea>
         </div>
 
-        <button class="submitMessage">发表评论</button>
+        <button class="submitMessage" @click="addMessage">发表评论</button>
     </div>
 </template>
 
 <script>
-export default {
-    props:['isCancel'],
-    methods:{
-        cancelMessage:function(){
-            this.$emit('cancelMessage')
-        }
+    export default {
+        props: ['isCancel'],
+        data() {
+            return {
+                content: ''
+            }
+        },
+        methods: {
+            cancelMessage: function () {
+                this.$emit('cancelMessage')
+            },
+            addMessage: async function () {
+                // let articleTitle = this.$store.state.message.articleTitle;
+                // let articleId = this.$store.state.message.articleId;
+                // let type = this.$store.state.message.type;
+                // console.log(articleTitle, articleId, type)   
+                // byCriticsName:null,
+                //byCriticsId:null
+                if (!this.content) {
+                    this.$layer.msg('请输入内容');
+                    return
+                }
+                const { status, data } = await this.$axios.post('/message/add', { content: this.content, ...this.$store.state.message });
+                console.log(status, data)
+            }
+        },
     }
-}
 </script>
 
 <style lang="scss">
- .message-box{
-    textarea{
-        background-color: rgba(0,0,0,0);
-        width: 100%;
-        border:2px solid;
-        border-radius:4px;
-        border-color: rgb(193, 193, 193);
-        padding:10px;
-        font-size:14px;
-        transition: all 0.5s;
-        &:focus{
-            background-color: #fff;
-            border: 2px solid #f89693;
+    .message-box {
+        textarea {
+            background-color: rgba(0, 0, 0, 0);
+            width: 100%;
+            border: 2px solid;
+            border-radius: 4px;
+            border-color: rgb(193, 193, 193);
+            padding: 10px;
+            font-size: 14px;
             transition: all 0.5s;
-        } 
-    }
-    .submitMessage{
-        margin-top: 20px;
-        width: 100%;
-        color: rgb(217, 83, 79);
-        border: 2px solid rgb(217, 83, 79);
-        &:hover{
-            color: #fff;
+
+            &:focus {
+                background-color: #fff;
+                border: 2px solid #f89693;
+                transition: all 0.5s;
+            }
+        }
+
+        .submitMessage {
+            margin-top: 20px;
+            width: 100%;
+            color: rgb(217, 83, 79);
+            border: 2px solid rgb(217, 83, 79);
+
+            &:hover {
+                color: #fff;
+            }
         }
     }
- }
 </style>

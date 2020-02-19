@@ -15,6 +15,10 @@ const MessageSchema = new Schema({
         type: String,
         required: false
     },
+    commentsId: {
+        type: String,
+        required: false
+    },
     username: {
         type: String,
         required: true
@@ -33,7 +37,11 @@ const MessageSchema = new Schema({
     },
     articleTitle: {
         type: String,
-        required: true
+        required: false
+    },
+    articleId: {
+        type: String,
+        required: false
     },
     content: {
         type: String,
@@ -41,7 +49,7 @@ const MessageSchema = new Schema({
     },
     type: {
         type: Number,
-        //0，留言 1，留言下的评论 2，追加评论
+        //0,留言板下的留言 1,文章下的留言 2,留言下的评论 3,追加评论
         default: 0
     },
     isView: {
