@@ -8,7 +8,8 @@
  -->
 <template>
     <div>
-        <h3 class="comments-title"><i class="fa fa-comments"></i> {{msgListData.allTotal||0}} 条评论</h3>
+        <h3 class="comments-title"><i class="fa fa-comments"></i> {{msgListData.allTotal||0}}
+            条{{$store.state.message.articleId?"评论":"留言"}}</h3>
         <div class="loading-comments" v-if='!msgListData.code'>
             <i class="fa fa-spinner fa-spin"></i>
         </div>

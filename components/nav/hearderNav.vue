@@ -37,7 +37,7 @@
             'javascript': [{ 'nuxt.js': [false, '/?s=nuxt.js'] }, '/?s=javascript'],
             'python': [{ 'screpy': [false, '/?s=screpy'] }, '/?s=python']
           }],
-          '留言板': [false],
+          '留言板': [false,'/guestbook'],
           '主题切换': [false],
         },
         active: ''

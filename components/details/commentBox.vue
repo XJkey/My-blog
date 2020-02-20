@@ -44,6 +44,7 @@
         this.$store.commit('message/setCommentsId', null);
       },
       hackReset: function () {
+        this.cancelMessage()
         this.isHackReset = false
         this.$nextTick(() => {
           this.isHackReset = true

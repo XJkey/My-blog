@@ -15,8 +15,11 @@
 
       <search></search>
       <login :user='username' style="margin-top: 30px;"></login>
+      
+      <div data-aos="fade-up">
+        <newestMessage></newestMessage>
+      </div>
 
-      <newestMessage></newestMessage>
       <div data-aos="fade-up">
         <random-articles></random-articles>
       </div>

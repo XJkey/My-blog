@@ -70,5 +70,13 @@ router.get("/list", async (ctx, next) => {
 
 });
 
+router.get("/newestList", async (ctx, next) => {
+  let message = await Message.find().sort({ createTime: -1 }).limit(5)
+  if (message) {
+    ctx.body = { code: 200, msg: "列表获取成功", data: message };
+  } else {
+    throw new global.errs.NotFound();
+  }
 
+})
 export default router;

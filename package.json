@@ -34,6 +34,7 @@
     "sass": "^1.24.4",
     "sass-loader": "^8.0.0",
     "vee-validate": "^3.2.1",
+    "vue-directive-tooltip": "^1.6.3",
     "vue-layer": "^1.1.7"
   },
   "devDependencies": {
