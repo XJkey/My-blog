@@ -41,8 +41,8 @@
           .then(({ status, data }) => {
             this.$layer.msg(data.msg, {
               time: 1
-            }, layerid => {
-              this.$layer.close(layerid);
+            }, id => {
+              this.$layer.close(layerId);
               this.$layer.close(id);
               window.location.reload();
             }
