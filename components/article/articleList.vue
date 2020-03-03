@@ -9,7 +9,7 @@
 <template>
     <div>
         <template v-for="(item,index) in articleListData.data">
-            <article-bar :barData='item'></article-bar>
+            <article-bar :barData='item' style="margin-top: 40px;"></article-bar>
         </template>
         <div v-if='!articleListData.data.length' class="mx-auto mybody3 rounded" style="margin: 15px;padding: 20px;">暂无数据</div>
         <myPage v-if='!!articleListData.data.length' :item='6' :totalCount='articleListData.totalCount'></myPage>

@@ -14,13 +14,13 @@
     <div class="side">
 
       <search></search>
-      <login :user='username' style="margin-top: 30px;"></login>
+      <login :user='$store.state.user.user.username' style="margin-top: 30px;"></login>
       
-      <div data-aos="fade-up">
+      <div data-aos="fade-up" style="margin-top: 30px;">
         <newestMessage></newestMessage>
       </div>
 
-      <div data-aos="fade-up">
+      <div data-aos="fade-up" style="margin-top: 30px;">
         <random-articles></random-articles>
       </div>
     </div>
@@ -43,13 +43,6 @@
     },
     async asyncData(ctx) {
       let obj = {}
-      let { status, data: { username, power } } = await ctx.$axios.get('/users/getUser');
-      if (status === 200) {
-        obj = { username, power }
-      } else {
-        obj = { username: '', power: 0 }
-      }
-
 
       let { status: status1, data } = await ctx.$axios.get('/blogs/blogsList?' + ctx.route.fullPath.split('?')[1]);
       if (status1 === 200) {
@@ -61,6 +54,7 @@
       return obj
     },
     mounted() {
+      console.log(this.$store.state.user.user)
       window.scrollTo(0, 1)
     },
 
@@ -80,5 +74,6 @@
     vertical-align: top;
     width: 360px;
     margin: 15px;
+    margin-top: 60px;
   }
 </style>

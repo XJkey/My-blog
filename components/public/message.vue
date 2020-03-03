@@ -18,7 +18,8 @@
                 rows="10"></textarea>
         </div>
 
-        <button class="submitMessage" @click="addMessage">发表评论</button>
+        <button class="submitMessage" @click="addMessage" v-if='$store.state.user.user.username'>发表评论</button>
+        <button class="submitMessage" v-else><a href="/" style="display: block;">登陆以评论</a></button>
     </div>
 </template>
 

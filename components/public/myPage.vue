@@ -7,7 +7,7 @@
  * @FilePath: /My-blog/components/public/myPage.vue
  -->
 <template>
-    <div :class="['myPage',style]" style="margin: 20px;">
+    <div :class="['myPage',style]" style="padding: 20px; width: 100%; box-sizing: border-box; text-align: right;">
         <ul>
             <li v-if='activePage!=1&&count!=0'>
                 <a @click="changePage('-1')">«</a>

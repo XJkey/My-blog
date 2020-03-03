@@ -11,7 +11,7 @@
     <container-one :title="'最新评论'">
       <div class="content">
         <ul class="">
-          <li class="newestMessageList" v-for='(item,index) in message' v-tooltip.left="item.articleTitle||'留言板'">
+          <li class="newestMessageList" v-for='(item,index) in $store.state.side.newestMessage' v-tooltip.left="item.articleTitle||'留言板'">
             {{ $moment(item.createTime).format('L')}}
             {{item.username}}：{{item.content}}
           </li>
@@ -29,24 +29,14 @@
     },
     data() {
       return {
-        message: []
       }
     },
     async mounted() {
-      let { status, data } = await this.$axios.get('/message/newestList');
-      if (status === 200) {
-        this.message = data.data;
-      }
-
+ 
     },
     methods: {
       tips: function (e, title) {
-        console.log(e)
         let articleTitle = title ? title : '留言板'
-        // this.$layer.tips(articleTitle, e, {
-        //   tips: 0,
-        //   time: 100
-        // });
       }
     }
   }

@@ -70,16 +70,6 @@ export default {
   },
   computed: {},
   async mounted() {
-    //console.log(this.$store.state.user);
-    // const {
-    //   status,
-    //   data: {
-    //     user
-    //   }
-    // } = await this.$axios.get('/users/getUser');
-    // if (status == 200) {
-    //   this.user = user
-    // }
   },
   methods: {
     onSubmit() {

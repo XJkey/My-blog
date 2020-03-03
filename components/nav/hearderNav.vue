@@ -7,18 +7,25 @@
  * @FilePath: /My-blog/components/nav/hearderNav.vue
  -->
 <template>
-  <div>
-    <dl class="navLists shadow-md">
-      <dt class="inline-block"><a href="#" class="inline-block  text-center px-4 py-4">My blog</a></dt>
+  <div class="navLists shadow-md">
+    <dl style="width: 1300px; margin: 0 auto;">
+      <dt class="inline-block">
+        <a href="#" class="inline-block  text-center title">
+            <p style="padding-top: 3px;">My-Blogs</p>
+            <em>by XJkey</em>
+        </a>
+      </dt>
       <dd v-for="(item,key) in navDatas" class="inline-block" :class="{active:$route.path===item[1]}"
         @mouseleave="active=''" :key="'navList'+key">
-        <a :href="item[1]" class="inline-block  text-center px-4 py-4" @mouseover="active=key">{{key}}</a>
+
+        <a :href="item[1]" class="inline-block  text-center px-4 py-4" @mouseover="active=key"><i
+            :class="item[2]"></i>{{key}}</a>
         <template v-if="item[0]">
           <child-list v-show="active==key" :list="item[0]">
           </child-list>
         </template>
       </dd>
-      <dd class="inline-block" v-if="power>1" :class="{active:$route.path==='/writeArticles'}">
+      <dd class="inline-block" v-if="$store.state.user.user.power>1" :class="{active:$route.path==='/writeArticles'}">
         <a href="/writeArticles" class="inline-block  text-center px-4 py-4" target="_blank">发布博客</a>
       </dd>
     </dl>
@@ -30,29 +37,19 @@
   export default {
     data() {
       return {
-        power: '0',
         navDatas: {
-          '首页': [false, '/'],
+          '首页': [false, '/', 'fa fa-home'],
           '技术类型': [{
             'javascript': [{ 'nuxt.js': [false, '/?s=nuxt.js'] }, '/?s=javascript'],
             'python': [{ 'screpy': [false, '/?s=screpy'] }, '/?s=python']
-          }],
-          '留言板': [false,'/guestbook'],
+          }, '', 'fa fa-book'],
+          '留言板': [false, '/guestbook', 'fa fa-comments'],
           '主题切换': [false],
         },
         active: ''
       }
     },
     async mounted() {
-      let {
-        status,
-        data: {
-          power
-        }
-      } = await this.$axios.get('/users/getUser');
-      if (status === 200) {
-        this.power = power
-      }
     },
     components: {
       childList
@@ -66,9 +63,25 @@
 <style lang="scss" type="text/scss" scoped rel="stylesheet/scss">
   .navLists{
    background-color: rgba(10,10,0,0.7);
+   .title {
+      text-align: center;
+      color: #fff;
+      text-shadow: 0 0 .1em, 0 0 .3em;
+      font-size: 20px;
+      font-family: "Microsoft YaHei";
+      padding:0 20px;
+      em {
+        color: #bfc5d4;
+        font-style: normal;
+        font-size: 12px;
+        display:block;
+      }
+    }
+
    dd{
     color: #fff;
     position: relative;
+    vertical-align: top;
     &.active{
       background-color:rgba(138,43,226,0.7) !important;
     }

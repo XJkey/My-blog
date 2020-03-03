@@ -47,10 +47,7 @@
       let createTime = new Date(this.barData.createTime)
       this.month = createTime.getMonth() + 1;
       this.day = createTime.getDate();
-      let { status, data: { username, power } } = await this.$axios.get('/users/getUser');
-      if (status === 200) {
-        this.power = power
-      }
+      this.power = this.$store.state.user.user.power
     },
     methods: {
       uphot: function (id) {

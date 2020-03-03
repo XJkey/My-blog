@@ -67,13 +67,7 @@
         async mounted() {
             let query = this.$route.query;
             let pageNum = query.pageNum ? query.pageNum : 1
-            let { status, data: { username, power } } = await this.$axios.get('/users/getUser');
-            if (status === 200) {
-                if (username) {
-                    this.isAnswer = true
-                }
-            }
-
+            this.isAnswer = this.$store.state.user.user.username?true:false
             let { status: status1, data } = await this.$axios.get('/message/list', { params: { articleId: this.$store.state.message.articleId, pageNum } });
             if (status1 === 200) {
                 this.msgListData = data

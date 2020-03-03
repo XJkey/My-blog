@@ -19,6 +19,10 @@ module.exports = {
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
       { hid: 'description', name: 'description', content: process.env.npm_package_description || '' }
     ],
+    script: [
+      { src: 'http://libs.baidu.com/jquery/2.0.0/jquery.min.js' },
+      { src: '/js/jquery.mlensEN-1.0.js' }
+    ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
     ]
@@ -42,6 +46,7 @@ module.exports = {
     { src: '@/plugins/vee-validate' },
     { src: '@/plugins/vue-layert' },
     { src: '@/plugins/moment' },
+    { src: '@/plugins/vtip' },
     { src: '@/plugins/vtip' }
   ],
   /*
@@ -85,8 +90,10 @@ module.exports = {
     styleResources: {
       scss: './assets/css/scssVariable.scss'
     },
-    extend(config, ctx) {
-
+    build: {
+      extend(config, ctx) {
+      }
     }
+
   }
 }

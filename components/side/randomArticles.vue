@@ -11,7 +11,7 @@
     <container-one :title="'随机文章'">
       <div class="content">
         <ul>
-          <li v-for="(item, index) in Blogs" :key="index">
+          <li v-for="(item, index) in $store.state.side.randomArticles" :key="index">
             <span class="post-title">{{item.title}}</span>
             <span class="badge float-right">{{item.hot}}℃</span>
           </li>
@@ -29,14 +29,9 @@
     },
     data() {
       return {
-        Blogs: []
       }
     },
     async mounted() {
-      let { status, data } = await this.$axios.get('/blogs/getRandomBlogs');
-      if (status === 200) {
-        this.Blogs = data.data;
-      }
 
     },
   }
