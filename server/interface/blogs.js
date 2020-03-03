@@ -125,7 +125,7 @@ router.get("/blogsList", async (ctx, next) => {
 });
 
 router.get("/getRandomBlogs", async (ctx, next) => {
-  let blog = await Blogs.aggregate([{ $sample: { size: 8 } }]);
+  let blog = await Blogs.aggregate([{ $match: { isDelete: false } }, { $sample: { size: 8 } }]);
   if (blog) {
     ctx.body = { code: 200, msg: "博客获取成功", data: blog };
   } else {

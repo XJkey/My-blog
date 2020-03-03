@@ -8,7 +8,7 @@
  -->
 <template>
   <div class="navLists shadow-md">
-    <dl style="width: 1300px; margin: 0 auto;">
+    <dl style="width: 1230px; margin: 0 auto;">
       <dt class="inline-block">
         <a href="#" class="inline-block  text-center title">
             <p style="padding-top: 3px;">My-Blogs</p>

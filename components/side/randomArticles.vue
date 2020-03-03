@@ -12,8 +12,11 @@
       <div class="content">
         <ul>
           <li v-for="(item, index) in $store.state.side.randomArticles" :key="index">
-            <span class="post-title">{{item.title}}</span>
+            <a :href="'/details?title='+item.title" target="_blank">
+              <span class="post-title">{{item.title}}</span>
+            </a>
             <span class="badge float-right">{{item.hot}}℃</span>
+
           </li>
         </ul>
       </div>

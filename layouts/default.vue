@@ -22,7 +22,7 @@
       </div>
     </div>
     <hearder-nav></hearder-nav>
-    <div style="width: 1300px; margin: 0 auto; ">
+    <div style="width: 1230px; margin: 0 auto; ">
       <nuxt />
     </div>
     <x-footer></x-footer>

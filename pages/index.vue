@@ -54,7 +54,6 @@
       return obj
     },
     mounted() {
-      console.log(this.$store.state.user.user)
       window.scrollTo(0, 1)
     },
 
