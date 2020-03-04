@@ -10,7 +10,7 @@
   <div class="search">
     <form action="" class="flex">
       <input type="text" class="outline-none flex-grow" v-model="searchContent" :placeholder="placeholder">
-      <button @click='search' type="button" class="flex-grow-0"><i class="fa fa-search"></i></button>
+      <button @click='search' type="button" class="flex-grow-0"><i style="margin-bottom: 5px;" class="fa fa-search"></i></button>
     </form>
   </div>
 </template>

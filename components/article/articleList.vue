@@ -9,36 +9,40 @@
 <template>
     <div>
         <template v-for="(item,index) in articleListData.data">
-            <article-bar :barData='item' style="margin-top: 40px;"></article-bar>
+            <article-bar :barData='item' :imgName="result[index]" style="margin-top: 40px;"></article-bar>
         </template>
-        <div v-if='!articleListData.data.length' class="mx-auto mybody3 rounded" style="margin: 15px;padding: 20px;">暂无数据</div>
+        <div v-if='!articleListData.data.length' class="mx-auto mybody3 rounded" style="margin: 15px;padding: 20px;">
+            暂无数据</div>
         <myPage v-if='!!articleListData.data.length' :item='6' :totalCount='articleListData.totalCount'></myPage>
     </div>
 </template>
 
 <script>
     import articleBar from './articleBar.vue';
-    import myPage from '../public/myPage'
+    import myPage from '../public/myPage';
+    import { articleBarImgFileName } from '../../config/pictureFileName.js'
     export default {
-        props:['articleListData'],
+        props: ['articleListData'],
+        data() {
+            return {
+                result: [],
+                basementBg: ''
+            }
+        },
         components: { articleBar, myPage },
-        // data() {
-        //     return {
-        //         //数据总数
-        //         count: 0,
-        //         listData: [],
-        //         isData: true
-        //     }
-        // },
-        // async mounted() {         
-        //     let { status, data } = await this.$axios.get('/blogs/blogsList' + window.location.search);
-        //     if (status === 200) {
-        //         this.count = data.totalCount;
-        //         this.listData = data.data;
-        //         if (!this.count) {
-        //             this.isData = false
-        //         }
-        //     }
-        // }
+        mounted() {
+            let arr = articleBarImgFileName;
+
+            this.result = [];
+
+            let ranNum = 6;
+
+            for (let i = 0; i < ranNum; i++) {
+                let ran = Math.floor(Math.random() * (arr.length - i));
+                this.result.push(arr[ran]);
+                arr[ran] = arr[arr.length - i - 1];
+            };
+            console.log(this.result)
+        },
     }
 </script>

@@ -11,10 +11,10 @@
     <div class="bg-fixed" id='bgImg'>
       <li v-for="(item,key) in result" style="width: 100%;height: 100%; position: absolute; opacity: 0;"
         :class="{'animation0':!key}">
-        <img :src="'/img/'+item+'.jpg'" alt="" style=" object-fit: cover; width: 100%;height: 100%; ">
+        <img :src="'/img/backgroundImg/'+item+'.jpg'" alt="" style=" object-fit: cover; width: 100%;height: 100%; ">
       </li>
       <li style="width: 100%;height: 100%; position: absolute; opacity: 0.5;z-index: -1;" id="basementBg">
-        <img :src="'/img/'+basementBg+'.jpg'" alt="" style=" object-fit: cover; width: 100%;height: 100%; ">
+        <img :src="'/img/backgroundImg/'+basementBg+'.jpg'" alt="" style=" object-fit: cover; width: 100%;height: 100%; ">
       </li>
     </div>
     <div id='shade' style="overflow: hidden;position: fixed;z-index: 1000;top: 0; left: 0;bottom: 0;right: 0;">
@@ -34,6 +34,7 @@
   import hearderNav from "../components/nav/hearderNav";
   import xFooter from "../components/footer";
   import AOS from 'aos';
+  import { backgroundImgFileName } from '../config/pictureFileName.js'
   import 'aos/dist/aos.css';
   export default {
     components: {
@@ -42,7 +43,6 @@
     },
     data: function () {
       return {
-        backgroundImageAarry: ['3E714584', '3FAC9268', '3FE1CDA1', '4DCED4E2', '9E1AA9CA', '9D840F43'],
         result: [],
         basementBg: '',
       }
@@ -75,11 +75,11 @@
         $("#shade").hide()
       });
 
-      let arr = this.backgroundImageAarry;
+      let arr = backgroundImgFileName;
 
       this.result = [];
 
-      let ranNum = 4;
+      let ranNum = 6;
 
       for (let i = 0; i < ranNum; i++) {
         let ran = Math.floor(Math.random() * (arr.length - i));

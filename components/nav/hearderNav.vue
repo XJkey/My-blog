@@ -18,8 +18,7 @@
       <dd v-for="(item,key) in navDatas" class="inline-block" :class="{active:$route.path===item[1]}"
         @mouseleave="active=''" :key="'navList'+key">
 
-        <a :href="item[1]" class="inline-block  text-center px-4 py-4" @mouseover="active=key"><i
-            :class="item[2]"></i>{{key}}</a>
+        <a :href="item[1]" class="inline-block  text-center px-4 py-4" @mouseover="active=key"><i style="margin-right: 3px;" :class="item[2]"></i>{{key}}</a>
         <template v-if="item[0]">
           <child-list v-show="active==key" :list="item[0]">
           </child-list>
