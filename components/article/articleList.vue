@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2020-01-11 21:22:16
- * @LastEditTime : 2020-02-10 19:01:37
+ * @LastEditTime: 2020-03-04 19:55:16
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /My-blog/components/article/articleList.vue
@@ -42,7 +42,6 @@
                 this.result.push(arr[ran]);
                 arr[ran] = arr[arr.length - i - 1];
             };
-            console.log(this.result)
         },
     }
 </script>
