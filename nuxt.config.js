@@ -76,7 +76,7 @@ module.exports = {
   ** See https://axios.nuxtjs.org/options
   */
   axios: {
-   // browserBaseURL: 'http://www.hani.cool'
+    //browserBaseURL: 'http://www.hani.cool'
   },
   /*
   ** Build configuration

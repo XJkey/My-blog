@@ -34,7 +34,7 @@
                 this.messageCancel = true
             },
             cancelMessage: function () {
-                let commentBox = document.getElementsByClassName('commentBox')[0]
+                let commentBox = document.getElementsByClassName('guestbook')[0]
                 commentBox.appendChild(this.$refs.myMsg.$el);
                 this.messageCancel = false
                 this.$store.commit('message/setType', 0);
