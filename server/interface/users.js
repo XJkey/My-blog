@@ -121,7 +121,7 @@ router.post('/singup', singupValidate, async (ctx) => {
     const saveCode = await Store.hget(`nodemail:${username}`, 'code');
     const saveExpire = await Store.hget(`nodemail:${username}`, 'expire');
     const createTime = await Store.hget(`nodemail:${username}`, 'createTime');
-    if (code === saveCode) {
+    if (code.toLowerCase() === saveCode.toLowerCase()) {
       if (new Date().getTime() - createTime - saveExpire > 0) {
         throw new global.errs.ValidationError('验证码已过期，请重新尝试');
       }

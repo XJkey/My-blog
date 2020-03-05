@@ -136,6 +136,7 @@
               data
             }) => {
               if (data.code == 200) {
+                this.$layer.msg('验证码已发送');
                 this.sendCodeTime = data.redispatch / 1000
                 let timerid = setInterval(() => {
                   --this.sendCodeTime;
@@ -173,8 +174,21 @@
           status,
           data
         }) => {
-          if (data && data.code == 200) {
-            window.location.href = '/'
+          if (data) {
+            this.$layer.msg(data.msg);
+            if (data.error_code == 0) {
+              this.$axios.post("/users/signin", {
+                username: this.username,
+                password: this.vpassword
+              }).then(({ status, data }) => {
+                window.location.href = "/";
+              }).catch(err => {
+                let data = err.response.data;
+                if (data.msg) {
+                  this.$layer.msg(data.msg);
+                }
+              });
+            }
           }
         }).catch(err => {
           let data = err.response.data;

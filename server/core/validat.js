@@ -12,8 +12,8 @@ datalize.set('autoValidate', true);
 
 
 export let singupValidate = datalize([
-    field('username', '用户名').required().range(1, 20),
-    field('password', '密码').required().min(10),
+    field('username', '用户名').required().length(1, 20),
+    field('password', '密码').required().minLength(6),
     field('vpassword', '确认密码').required().custom(async function (value, result, ctx) {
         let password = await result.password;
         if (value != password.value) {
@@ -21,5 +21,5 @@ export let singupValidate = datalize([
         }
     }),
     field('email', '邮箱').required().email(),
-    field('code', '验证码').required().max(10),
+    field('code', '验证码').required().length(4,4),
 ])
