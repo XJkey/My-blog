@@ -76,7 +76,7 @@
 					$parentDiv.css({"width":$obj.width()});
 					
 					$target = $("<div style='" + lensStyle + "' class='" + $options.lensCss + "'>&nbsp;</div>").appendTo($parentDiv);
-					$imageTag = $("<img style='display:none;' src='" + $options.imgSrc + "' />").appendTo($parentDiv);
+					$imageTag = $("<img  style='display:none;position: absolute;' src='" + $options.imgSrc + "' />").appendTo($parentDiv);
 					
 		            $target.css({ 
 						backgroundImage: "url('" + $options.imgSrc + "')",
@@ -142,13 +142,12 @@
 				offset = $obj.offset(),
         		leftPos = parseInt(e.pageX - offset.left),
         		topPos = parseInt(e.pageY - offset.top),
-				widthRatio = $imageTag.width() / $obj.width(),
-				heightRatio = $imageTag.height() / $obj.height();
+				widthRatio = $imageTag[0].width / $obj.width(),
+				heightRatio = $imageTag[0].height / $obj.height();
 				
 			//if mouse position is inside our image
 	        if (leftPos > 0 && topPos > 0 && leftPos < $obj.width() && topPos < $obj.height()) 
 			{	
-				//calculating hi-res image position as target background
 	            leftPos = String(-((e.pageX - offset.left) * widthRatio  - $target.width() / 2));
 	            topPos = String(-((e.pageY - offset.top) * heightRatio - $target.height() / 2));
 	            $target.css({ backgroundPosition: leftPos + 'px ' + topPos + 'px' });
