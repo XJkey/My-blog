@@ -147,7 +147,8 @@
 				
 			//if mouse position is inside our image
 	        if (leftPos > 0 && topPos > 0 && leftPos < $obj.width() && topPos < $obj.height()) 
-			{	
+			{					
+				//calculating hi-res image position as target background
 	            leftPos = String(-((e.pageX - offset.left) * widthRatio  - $target.width() / 2));
 	            topPos = String(-((e.pageY - offset.top) * heightRatio - $target.height() / 2));
 	            $target.css({ backgroundPosition: leftPos + 'px ' + topPos + 'px' });
